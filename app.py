@@ -1,13 +1,12 @@
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import FileResponse
-from fastapi.responses import HTMLResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
-from starlette.middleware.base import BaseHTTPMiddleware  
-from starlette.responses import Response  
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.responses import Response
 from dotenv import load_dotenv
 import os
 
@@ -48,11 +47,6 @@ async def lifespan(app: FastAPI):
             os.makedirs(dir_path)
             print(f"📁 Criada pasta: {dir_path}")
     
-    # Criar todas as tabelas
-    print("🔧 Criando tabelas do banco de dados...")
-    Base.metadata.create_all(bind=engine)
-    print("✅ Banco de dados inicializado com sucesso!")
-
     yield
 
     print("🔴 Aplicação encerrada")
@@ -67,22 +61,15 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# === 1. PRIMEIRO: Middleware do Ngrok ===
-if os.getenv("ENVIRONMENT") != "development":
+# === 1. PRIMEIRO: Middleware do Ngrok (apenas desenvolvimento) ===
+if os.getenv("ENVIRONMENT") == "development":  # ← CORRIGIDO: "==" development
     class AddNgrokHeaderMiddleware(BaseHTTPMiddleware):
         async def dispatch(self, request: Request, call_next):
-            # Processa a requisição normalmente
             response = await call_next(request)
-            
-            # Adiciona o cabeçalho especial do ngrok
             response.headers["ngrok-skip-browser-warning"] = "true"
-            
             return response
-        
-    app.add_middleware(AddNgrokHeaderMiddleware)
-
-# Registre o middleware do ngrok PRIMEIRO
-app.add_middleware(AddNgrokHeaderMiddleware)
+    
+    app.add_middleware(AddNgrokHeaderMiddleware)  # ← OK, só aqui
 
 # === 2. SEGUNDO: Session Middleware ===
 app.add_middleware(
@@ -95,8 +82,8 @@ app.add_middleware(
 
 # === 3. TERCEIRO: CORS Middleware ===
 allowed_origins = ["*"] if os.getenv("ENVIRONMENT") == "development" else [
-    "https://seu-app.onrender.com",  # URL do Render
-    "https://www.nandolab3d.com.br"     # Ainda não tenho dominio mas vai ser esse mesmo
+    "https://nandolab3d.onrender.com",  # ← Altere para SUA URL do Render
+    "https://www.nandolab3d.com.br"
 ]
 
 app.add_middleware(
@@ -124,16 +111,16 @@ async def health_check():
     return {
         "status": "healthy",
         "service": "NandoLab 3D",
-        # MODIFIQUE para:
         "environment": os.getenv("ENVIRONMENT", "development"),
         "database": "PostgreSQL" if os.getenv("DATABASE_URL") else "SQLite"
     }
 
-# Favicon para evitar erro 404 no Render
+# Favicon para evitar erro 404
 @app.get("/favicon.ico")
 async def favicon():
     return FileResponse("static/imagens/Fav.ico")
 
+# Para desenvolvimento local
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)
