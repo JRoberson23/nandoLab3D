@@ -7,16 +7,17 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import Response
+from datetime import datetime
 from dotenv import load_dotenv
 from sqlalchemy import inspect, text
-from database import SessionLocal
+
 
 import os
 
 load_dotenv()
 
 # Importar database e models
-from models.database import engine, Base
+from models.database import engine, Base, SessionLocal
 from models import models
 
 # Importar routers
