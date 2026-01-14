@@ -1,6 +1,9 @@
 # routers/main.py
+from datetime import datetime
+import os
 from fastapi import APIRouter, Request, Depends, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
+from flask import app
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from sqlalchemy import func  # IMPORTANTE: Adicionar esta linha!
@@ -177,3 +180,15 @@ async def obrigado(request: Request):
             "titulo": "Obrigado! - NandoLab 3D"
         }
     )
+
+@app.get("/render-check")
+async def render_check():
+    """Endpoint ESPECIAL para verificar configuração do Render"""
+    return {
+        "service": "NandoLab 3D",
+        "status": "running",
+        "environment": os.getenv("ENVIRONMENT", "not_set"),
+        "render": True,
+        "database_tables_created": True if os.getenv("ENVIRONMENT") == "development" else "checking",
+        "timestamp": datetime.now().isoformat()
+    }
