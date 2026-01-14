@@ -1,18 +1,19 @@
-# routers/main.py
+# routers/main.py - VERSÃO CORRIGIDA
 from datetime import datetime
 import os
 from fastapi import APIRouter, Request, Depends, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
-from flask import app
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
-from sqlalchemy import func  # IMPORTANTE: Adicionar esta linha!
+from sqlalchemy import func  
 
 from models.database import get_db
-from models.models import Projeto, Pedido  # Adicionar Pedido também
+from models.models import Projeto, Pedido
 
 router = APIRouter(tags=["Páginas Públicas"])
-templates = Jinja2Templates(directory="templates")
+
+# Configurar templates - IMPORTANTE: use o mesmo do app.py
+from config.templates import templates
 
 # ========== ROTAS PÚBLICAS DO SITE ==========
 
@@ -181,7 +182,7 @@ async def obrigado(request: Request):
         }
     )
 
-@app.get("/render-check")
+@router.get("/render-check")
 async def render_check():
     """Endpoint ESPECIAL para verificar configuração do Render"""
     return {
