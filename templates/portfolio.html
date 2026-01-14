@@ -56,33 +56,34 @@
 <section class="py-5">
     <div class="container">
         <div class="row g-4" id="portfolio-gallery">
-            {% if projetos %}
+                {% if projetos is defined and projetos|length > 0 %}
+                <!-- TEM PROJETOS - MOSTRA OS CARDS -->
                 {% for projeto in projetos %}
                 <div class="col-lg-4 col-md-6 portfolio-item" 
-                     data-category="{{ projeto.categoria|lower|replace(' ', '') if projeto.categoria else '' }}">
+                    data-category="{{ projeto.categoria|lower|replace(' ', '') if projeto.categoria else '' }}">
                     <div class="card project-card">
                         <!-- Imagem do projeto -->
                         <div class="project-image">
                             <img src="{{ projeto.url_imagem }}" 
-                                 class="card-img-top" 
-                                 alt="{{ projeto.titulo }}"
-                                 onerror="this.src='/static/imagens/projeto-default.jpg'">
+                                class="card-img-top" 
+                                alt="{{ projeto.titulo }}"
+                                onerror="this.src='/static/imagens/projeto-default.jpg'">
                             <div class="project-overlay">
                                 <a href="#" 
-                                   class="btn-view-project" 
-                                   data-bs-toggle="modal" 
-                                   data-bs-target="#projectModal"
-                                   data-project-id="{{ projeto.id }}"
-                                   data-project-title="{{ projeto.titulo }}"
-                                   data-project-category="{{ projeto.categoria }}"
-                                   data-project-description="{{ projeto.descricao }}"
-                                   data-project-date="{{ projeto.data_conclusao.strftime('%d/%m/%Y') if projeto.data_conclusao else '--/--/----' }}"
-                                   data-project-material="{{ projeto.material }}"
-                                   {% set todas_imagens = [projeto.url_imagem] %}
+                                class="btn-view-project" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#projectModal"
+                                data-project-id="{{ projeto.id }}"
+                                data-project-title="{{ projeto.titulo }}"
+                                data-project-category="{{ projeto.categoria }}"
+                                data-project-description="{{ projeto.descricao }}"
+                                data-project-date="{{ projeto.data_conclusao.strftime('%d/%m/%Y') if projeto.data_conclusao else '--/--/----' }}"
+                                data-project-material="{{ projeto.material }}"
+                                {% set todas_imagens = [projeto.url_imagem] %}
                                     {% for img_extra in projeto.lista_imagens_extra %}
                                     {% set _ = todas_imagens.append('/static/uploads/projetos/' + img_extra) %}
                                     {% endfor %}
-                                    data-project-images='{{ todas_imagens|tojson|safe }}'
+                                    data-project-images='{{ todas_imagens|tojson|safe }}'>
                                     <i class="fas fa-expand-alt"></i>
                                 </a>
                             </div>
@@ -118,21 +119,26 @@
                 </div>
                 {% endfor %}
                 
-                {% if projetos|length == 0 %}
+            {% elif projetos is defined and projetos|length == 0 %}
+                <!-- LISTA VAZIA - MOSTRA MENSAGEM AMIGÁVEL -->
                 <div class="col-12 text-center py-5">
                     <div class="empty-state">
                         <i class="fas fa-cube fa-3x mb-3 text-muted"></i>
-                        <h4>Nenhum projeto disponível</h4>
-                        <p class="text-muted">Em breve teremos novidades no portfólio!</p>
+                        <h4 class="text-muted">Nenhum projeto cadastrado ainda</h4>
+                        <p class="text-muted mb-3">Estamos preparando nosso portfólio. Em breve teremos novidades!</p>
+                        <a href="/orcamento" class="btn btn-primary">
+                            <i class="fas fa-comments-dollar me-2"></i>Seja nosso primeiro cliente!
+                        </a>
                     </div>
                 </div>
-                {% endif %}
+                
             {% else %}
+                <!-- VARIÁVEL NÃO DEFINIDA - MOSTRA CARREGANDO -->
                 <div class="col-12 text-center py-5">
                     <div class="spinner-border text-primary" role="status">
                         <span class="visually-hidden">Carregando...</span>
                     </div>
-                    <p class="mt-2">Carregando projetos...</p>
+                    <p class="mt-2">Carregando portfólio...</p>
                 </div>
             {% endif %}
         </div>
