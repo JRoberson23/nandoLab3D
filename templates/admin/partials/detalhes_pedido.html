@@ -1,0 +1,120 @@
+<div class="row">
+    <div class="col-md-6">
+        <h6><i class="fas fa-user me-2"></i>Informações do Cliente</h6>
+        <div class="mb-3">
+            <strong>Nome:</strong> {{ pedido.nome_cliente }}
+        </div>
+        <div class="mb-3">
+            <strong>Email:</strong> {{ pedido.email }}
+        </div>
+        <div class="mb-3">
+            <strong>Telefone:</strong> {{ pedido.telefone if pedido.telefone else 'Não informado' }}
+        </div>
+        
+        <h6 class="mt-4"><i class="fas fa-cube me-2"></i>Detalhes do Projeto</h6>
+        <div class="mb-3">
+            <strong>Título:</strong> {{ pedido.titulo_projeto }}
+        </div>
+        <div class="mb-3">
+            <strong>Material:</strong> {{ pedido.material_desejado if pedido.material_desejado else 'Não especificado' }}
+        </div>
+        <div class="mb-3">
+            <strong>Dimensões:</strong> {{ pedido.dimensoes if pedido.dimensoes else 'Não especificado' }}
+        </div>
+        <div class="mb-3">
+            <strong>Prazo:</strong> {{ pedido.prazo_desejado if pedido.prazo_desejado else 'Não especificado' }} dias
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <h6><i class="fas fa-chart-line me-2"></i>Status e Valores</h6>
+        <div class="mb-3">
+            <strong>Status:</strong> 
+            <span class="badge 
+                {% if pedido.status == 'pendente' %}bg-warning
+                {% elif pedido.status == 'aprovado' %}bg-primary
+                {% elif pedido.status == 'concluido' %}bg-success
+                {% elif pedido.status == 'rejeitado' %}bg-danger
+                {% else %}bg-secondary{% endif %}">
+                {{ pedido.status.title() if pedido.status else 'Desconhecido' }}
+            </span>
+        </div>
+        <div class="mb-3">
+            <strong>Valor orçado:</strong> 
+            {% if pedido.valor_orcamento %}
+                R$ {{ "%.2f"|format(pedido.valor_orcamento) }}
+            {% else %}
+                <em class="text-muted">A definir</em>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <strong>Valor pago:</strong> 
+            {% if pedido.valor_pago %}
+                R$ {{ "%.2f"|format(pedido.valor_pago) }}
+            {% else %}
+                R$ 0,00
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <strong>Pagamento:</strong> {{ pedido.forma_pagamento if pedido.forma_pagamento else 'A definir' }}
+        </div>
+        
+        <h6 class="mt-4"><i class="fas fa-calendar-alt me-2"></i>Datas</h6>
+        <div class="mb-2">
+            <small><strong>Pedido:</strong> 
+                {% if pedido.data_pedido %}
+                    {{ pedido.data_pedido.strftime('%d/%m/%Y %H:%M') }}
+                {% else %}
+                    --
+                {% endif %}
+            </small>
+        </div>
+        <div class="mb-2">
+            <small><strong>Orçamento:</strong> 
+                {% if pedido.data_orcamento %}
+                    {{ pedido.data_orcamento.strftime('%d/%m/%Y') }}
+                {% else %}
+                    --
+                {% endif %}
+            </small>
+        </div>
+        <div class="mb-2">
+            <small><strong>Aprovação:</strong> 
+                {% if pedido.data_aprovacao %}
+                    {{ pedido.data_aprovacao.strftime('%d/%m/%Y') }}
+                {% else %}
+                    --
+                {% endif %}
+            </small>
+        </div>
+        <div class="mb-2">
+            <small><strong>Conclusão:</strong> 
+                {% if pedido.data_conclusao %}
+                    {{ pedido.data_conclusao.strftime('%d/%m/%Y') }}
+                {% else %}
+                    --
+                {% endif %}
+            </small>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <h6><i class="fas fa-file-alt me-2"></i>Descrição do Projeto</h6>
+        <div class="card card-body bg-light">
+            {{ pedido.descricao|replace('\n', '<br>')|safe if pedido.descricao else 'Sem descrição' }}
+        </div>
+    </div>
+</div>
+
+{% if pedido.arquivos_referencia %}
+<div class="row mt-4">
+    <div class="col-12">
+        <h6><i class="fas fa-paperclip me-2"></i>Arquivos de Referência</h6>
+        <div class="alert alert-info">
+            {{ pedido.arquivos_referencia }}
+        </div>
+    </div>
+</div>
+{% endif %}

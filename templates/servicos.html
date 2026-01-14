@@ -1,0 +1,349 @@
+{% extends "base.html" %}
+
+{% block title %}Serviços - NandoLab 3D{% endblock %}
+
+{% block extra_css %}
+<link href="/static/css/servicos.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<!-- ========== HERO SERVIÇOS ========== -->
+<section class="servicos-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="hero-title">Nossos Serviços em 3D</h1>
+                <p class="hero-subtitle">
+                    Oferecemos soluções completas em modelagem e impressão 3D. 
+                    Do conceito inicial à peça finalizada, cuidamos de cada detalhe.
+                </p>
+                <div class="hero-buttons">
+                    <a href="/orcamento" class="btn btn-primary btn-lg me-3">
+                        <i class="fas fa-comments-dollar me-2"></i>Solicitar Orçamento
+                    </a>
+                    <a href="/portfolio" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-images me-2"></i>Ver Portfólio
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="hero-illustration">
+                    <i class="fas fa-cube fa-10x text-white opacity-25"></i>
+                    <i class="fas fa-print fa-8x text-white opacity-50" style="position: absolute; top: 50px; left: 80px;"></i>
+                    <i class="fas fa-ruler-combined fa-6x text-white" style="position: absolute; top: 120px; right: 100px;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== SERVIÇOS PRINCIPAIS ========== -->
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="section-title center">Serviços Oferecidos</h2>
+                <p class="text-muted">Conheça nossas especialidades</p>
+            </div>
+        </div>
+        
+        <div class="row g-4" id="servicos-container">
+            <!-- Serviços carregados via API -->
+            <div class="col-12 text-center">
+                <div class="spinner-border text-primary" role="status" id="loading-spinner">
+                    <span class="visually-hidden">Carregando...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== PROCESSO DE TRABALHO ========== -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="section-title center">Como Trabalhamos</h2>
+                <p class="text-muted">Nosso processo em 4 etapas</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Etapa 1 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="process-step text-center">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h4 class="step-title">Ideia & Consulta</h4>
+                    <p class="step-description">
+                        Discutimos sua ideia, necessidades e objetivos do projeto.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Etapa 2 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="process-step text-center">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h4 class="step-title">Modelagem 3D</h4>
+                    <p class="step-description">
+                        Criamos o modelo digital com precisão e atenção aos detalhes.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Etapa 3 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="process-step text-center">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-print"></i>
+                    </div>
+                    <h4 class="step-title">Impressão 3D</h4>
+                    <p class="step-description">
+                        Produção da peça física com materiais de alta qualidade.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Etapa 4 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="process-step text-center">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h4 class="step-title">Entrega</h4>
+                    <p class="step-description">
+                        Entrega do projeto finalizado, pronto para uso ou exposição.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== TABELA DE MATERIAIS ========== -->
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="section-title center">Materiais Disponíveis</h2>
+                <p class="text-muted">Trabalhamos com diversos materiais para atender sua necessidade</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table table-hover materials-table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Material</th>
+                                <th>Características</th>
+                                <th>Aplicações</th>
+                                <th>Durabilidade</th>
+                                <th>Preço Base</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>PLA</strong>
+                                    <div class="material-badge eco">Ecológico</div>
+                                </td>
+                                <td>Biodegradável, fácil de usar, várias cores</td>
+                                <td>Prototipagem, decoração, maquetes</td>
+                                <td>
+                                    <div class="durability-bar">
+                                        <div class="bar-fill" style="width: 70%"></div>
+                                    </div>
+                                    <small>Média</small>
+                                </td>
+                                <td class="price-cell">R$ 80/kg</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>ABS</strong>
+                                    <div class="material-badge resistant">Resistente</div>
+                                </td>
+                                <td>Resistente ao impacto, boa durabilidade</td>
+                                <td>Peças funcionais, engrenagens, componentes</td>
+                                <td>
+                                    <div class="durability-bar">
+                                        <div class="bar-fill" style="width: 90%"></div>
+                                    </div>
+                                    <small>Alta</small>
+                                </td>
+                                <td class="price-cell">R$ 120/kg</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>PETG</strong>
+                                    <div class="material-badge versatile">Versátil</div>
+                                </td>
+                                <td>Transparente, resistente a produtos químicos</td>
+                                <td>Embalagens, peças técnicas, utensílios</td>
+                                <td>
+                                    <div class="durability-bar">
+                                        <div class="bar-fill" style="width: 85%"></div>
+                                    </div>
+                                    <small>Alta</small>
+                                </td>
+                                <td class="price-cell">R$ 110/kg</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Resina</strong>
+                                    <div class="material-badge detail">Alto Detalhe</div>
+                                </td>
+                                <td>Acabamento liso, alta precisão de detalhes</td>
+                                <td>Jóias, miniaturas, esculturas detalhadas</td>
+                                <td>
+                                    <div class="durability-bar">
+                                        <div class="bar-fill" style="width: 75%"></div>
+                                    </div>
+                                    <small>Média-Alta</small>
+                                </td>
+                                <td class="price-cell">R$ 200/L</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Flexível (TPU)</strong>
+                                    <div class="material-badge flexible">Flexível</div>
+                                </td>
+                                <td>Material flexível, resistente a impactos</td>
+                                <td>Proteções, capas, peças que exigem flexibilidade</td>
+                                <td>
+                                    <div class="durability-bar">
+                                        <div class="bar-fill" style="width: 80%"></div>
+                                    </div>
+                                    <small>Alta</small>
+                                </td>
+                                <td class="price-cell">R$ 150/kg</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center mt-4">
+                    <small class="text-muted">* Preços são base e podem variar conforme complexidade do projeto</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="section-title center">Perguntas Frequentes</h2>
+                <p class="text-muted">Tire suas dúvidas sobre nossos serviços</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="accordion" id="faqAccordion">
+                    <!-- FAQ 1 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                Qual o prazo médio para um projeto?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                O prazo varia conforme complexidade. Projetos simples: 3-5 dias. Projetos complexos: 7-14 dias. Fornecemos prazo estimado na consulta inicial.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 2 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                Preciso ter o arquivo 3D pronto?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Não necessariamente. Oferecemos serviço completo de modelagem 3D. Você pode nos enviar desenhos, fotos ou até apenas uma ideia, e nós criamos o modelo.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 3 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                Fazem envio para todo o Brasil?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Sim! Entregamos em todo território nacional. O valor do frete é calculado no orçamento com base no tamanho e peso da peça.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 4 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                Posso solicitar alterações durante o processo?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Sim, até a fase de aprovação do modelo 3D. Após aprovação e início da impressão, alterações podem gerar custos adicionais.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 5 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                Qual o tamanho máximo de impressão?
+                            </button>
+                        </h2>
+                        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Nossa maior impressora tem área de 30x30x40cm. Para peças maiores, podemos dividir em partes e montar posteriormente.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== CTA FINAL ========== -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2 class="cta-title">Pronto para iniciar seu projeto?</h2>
+            <p class="mb-4" style="font-size: 1.2rem; opacity: 0.9;">
+                Entre em contato para um orçamento personalizado sem compromisso.
+            </p>
+            <div class="cta-buttons">
+                <a href="/orcamento" class="btn btn-light btn-lg me-3">
+                    <i class="fas fa-comments-dollar me-2"></i>Solicitar Orçamento
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/servicos.js"></script>
+{% endblock %}

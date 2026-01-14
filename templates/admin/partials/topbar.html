@@ -1,0 +1,119 @@
+<!-- templates/admin/partials/topbar.html -->
+<nav class="admin-topbar">
+    <div class="topbar-left d-flex align-items-center">
+        <button class="btn btn-outline-secondary me-3 d-lg-none" id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <h1 class="h4 mb-0">
+            {% if request.url.path == '/admin/dashboard' %}
+                <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+            {% elif 'projetos' in request.url.path %}
+                <i class="fas fa-cube me-2"></i>Projetos
+            {% elif 'pedidos' in request.url.path %}
+                <i class="fas fa-shopping-cart me-2"></i>Pedidos
+            {% elif 'clientes' in request.url.path %}
+                <i class="fas fa-users me-2"></i>Clientes
+            {% elif 'depoimentos' in request.url.path %}
+                <i class="fas fa-comment me-2"></i>Depoimentos
+            {% elif 'configuracoes' in request.url.path %}
+                <i class="fas fa-cog me-2"></i>Configurações
+            {% else %}
+                Admin Panel
+            {% endif %}
+        </h1>
+    </div>
+    
+    <div class="topbar-right d-flex align-items-center gap-3">
+        <!-- Notificações -->
+        <div class="notification-dropdown">
+            <button class="notification-btn" data-bs-toggle="dropdown">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end notifications-dropdown">
+                <div class="dropdown-header">
+                    <h6 class="mb-0">Notificações</h6>
+                </div>
+                <div class="dropdown-body">
+                    <div class="notification-item unread">
+                        <div class="notification-icon info">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="notification-content">
+                            <p class="notification-text">Novo pedido recebido</p>
+                            <small class="notification-time">5 min atrás</small>
+                        </div>
+                    </div>
+                    <div class="notification-item unread">
+                        <div class="notification-icon warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="notification-content">
+                            <p class="notification-text">Material PLA acabando</p>
+                            <small class="notification-time">1 hora atrás</small>
+                        </div>
+                    </div>
+                    <div class="notification-item">
+                        <div class="notification-icon success">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="notification-content">
+                            <p class="notification-text">Projeto concluído</p>
+                            <small class="notification-time">Ontem</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown-footer">
+                    <a href="#" class="text-decoration-none small">Ver todas</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Usuário Admin -->
+        <div class="admin-user">
+            <span class="me-2">
+                {% if session.get('admin_nome') %}
+                    {{ session.get('admin_nome') }}
+                {% else %}
+                    Admin
+                {% endif %}
+            </span>
+            
+            <div class="dropdown d-inline-block">
+                <button class="btn btn-link text-dark p-0 dropdown-toggle" 
+                        type="button" 
+                        id="adminDropdown"
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false">
+                    <i class="fas fa-user-circle fa-lg"></i>
+                </button>
+                
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminDropdown">
+                    <li>
+                        <span class="dropdown-item-text small">
+                            <i class="fas fa-user me-2 text-muted"></i>
+                            <strong>{{ session.get('admin_nome', 'Admin') }}</strong>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="dropdown-item-text small">
+                            <i class="fas fa-phone me-2 text-muted"></i>
+                            {{ session.get('admin_telefone_formatado', 'Não informado') }}
+                        </span>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item" href="/admin/configuracoes">
+                            <i class="fas fa-cog me-2"></i> Configurações
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-danger" href="/admin/logout">
+                            <i class="fas fa-sign-out-alt me-2"></i> Sair
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

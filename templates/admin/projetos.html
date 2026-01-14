@@ -1,0 +1,254 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Gerenciar Projetos - NandoLab 3D Admin{% endblock %}
+
+{% block page_title %}Gerenciar Projetos{% endblock %}
+
+{% block extra_css %}
+
+{% endblock %}
+
+{% block content %}
+<div class="admin-wrapper">
+    <!-- Sidebar (igual ao dashboard) -->
+    {% include "admin/partials/sidebar.html" %}
+    
+    <!-- Conteúdo Principal -->
+    <main class="admin-content">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="mb-1">
+                    <i class="fas fa-cube me-2"></i>Gerenciar Projetos
+                </h2>
+                <p class="text-muted mb-0">Adicione, edite ou remova projetos do portfólio</p>
+            </div>
+            <div>
+                <a href="/admin/projetos/novo" class="btn btn-primary">
+                    <i class="fas fa-plus me-1"></i> Novo Projeto
+                </a>
+            </div>
+        </div>
+        </header>
+        
+        <!-- Filtros e Busca -->
+        <div class="content-section mb-4">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input type="text" 
+                               class="form-control" 
+                               id="search-input"
+                               placeholder="Buscar por título, categoria ou material...">
+                        <button class="btn btn-outline-secondary" type="button" id="clear-search">
+                            Limpar
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="filter-status">
+                        <option value="">Todos os status</option>
+                        <option value="published">Publicados</option>
+                        <option value="draft">Rascunhos</option>
+                        <option value="featured">Em destaque</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="filter-category">
+                        <option value="">Todas categorias</option>
+                        <option value="Arquitetura">Arquitetura</option>
+                        <option value="Escultura">Escultura</option>
+                        <option value="Protótipos">Protótipos</option>
+                        <option value="Decoração">Decoração</option>
+                        <option value="Personalizados">Personalizados</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Lista de Projetos -->
+        <div class="content-section">
+            <div class="table-responsive">
+                <table class="admin-table" id="projects-table">
+                    <thead>
+                        <tr>
+                            <th width="80">Imagem</th>
+                            <th>Título</th>
+                            <th>Categoria</th>
+                            <th>Material</th>
+                            <th>Status</th>
+                            <th>Data</th>
+                            <th width="150">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="projects-list">
+                        {% if projetos %}
+                            {% for projeto in projetos %}
+                            <tr class="project-row" 
+                                data-title="{{ projeto.titulo|lower }}"
+                                data-category="{{ projeto.categoria|default('')|lower }}"
+                                data-material="{{ projeto.material|default('')|lower }}"
+                                data-status="{{ 'published' if projeto.publicado else 'draft' }}{{ ' featured' if projeto.destaque else '' }}">
+                                <td>
+                                    {% if projeto.imagens %}
+                                        {% set primeira_imagem = projeto.imagens.split(',')[0] %}
+                                        <img src="{{ primeira_imagem }}" 
+                                             alt="{{ projeto.titulo }}"
+                                             class="project-thumb"
+                                             onerror="this.src='/static/imagens/Logo.png'">
+                                    {% else %}
+                                        <div class="project-thumb no-image">
+                                            <i class="fas fa-cube"></i>
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <strong>{{ projeto.titulo }}</strong>
+                                    {% if projeto.descricao %}
+                                    <p class="project-description">
+                                        {{ projeto.descricao[:80] }}{% if projeto.descricao|length > 80 %}...{% endif %}
+                                    </p>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="category-badge">{{ projeto.categoria or 'Sem categoria' }}</span>
+                                </td>
+                                <td>{{ projeto.material or '--' }}</td>
+                                <td>
+                                    <div class="status-container">
+                                        {% if projeto.publicado %}
+                                            <span class="status-badge published">
+                                                <i class="fas fa-check-circle me-1"></i>Publicado
+                                            </span>
+                                        {% else %}
+                                            <span class="status-badge draft">
+                                                <i class="fas fa-pencil-alt me-1"></i>Rascunho
+                                            </span>
+                                        {% endif %}
+                                        {% if projeto.destaque %}
+                                            <span class="status-badge featured">
+                                                <i class="fas fa-star me-1"></i>Destaque
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="date-container">
+                                        {% if projeto.data_conclusao %}
+                                            <span class="completion-date">{{ projeto.data_conclusao.strftime('%d/%m/%Y') }}</span>
+                                        {% else %}
+                                            <span class="no-date">--/--/----</span>
+                                        {% endif %}
+                                        <small class="created-date">
+                                            Criado: {{ projeto.created_at.strftime('%d/%m/%Y') }}
+                                        </small>
+                                    </div>
+                                </td>
+                                <td class="actions-cell">
+                                    <div class="actions-container">
+                                        <a href="/admin/projetos/editar/{{ projeto.id }}" 
+                                           class="btn-action edit" 
+                                           title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        
+                                        <button class="btn-action delete delete-project" 
+                                                data-id="{{ projeto.id }}"
+                                                data-title="{{ projeto.titulo }}"
+                                                title="Excluir">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        
+                                        <a href="/portfolio#project-{{ projeto.id }}" 
+                                           target="_blank" 
+                                           class="btn-action view"
+                                           title="Ver no site">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        
+                                        {% if projeto.publicado %}
+                                        <button class="btn-action unpublish toggle-status" 
+                                                data-id="{{ projeto.id }}"
+                                                data-action="unpublish"
+                                                title="Despublicar">
+                                            <i class="fas fa-eye-slash"></i>
+                                        </button>
+                                        {% else %}
+                                        <button class="btn-action publish toggle-status" 
+                                                data-id="{{ projeto.id }}"
+                                                data-action="publish"
+                                                title="Publicar">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="text-center py-5">
+                                    <div class="empty-state">
+                                        <i class="fas fa-cube fa-3x mb-3"></i>
+                                        <h4>Nenhum projeto cadastrado</h4>
+                                        <p class="mb-4">Comece adicionando seu primeiro projeto ao portfólio</p>
+                                        <a href="/admin/projetos/novo" class="btn btn-primary">
+                                            <i class="fas fa-plus me-2"></i>Criar Primeiro Projeto
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Paginação -->
+            {% if projetos and projetos|length >= 10 %}
+            <div class="pagination-container">
+                <nav aria-label="Paginação">
+                    <ul class="pagination">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Anterior</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Próxima</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+</div>
+
+<!-- Modal de Confirmação de Exclusão -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar Exclusão</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir o projeto <strong id="project-to-delete-title"></strong>?</p>
+                <p class="warning-text">
+                    <i class="fas fa-exclamation-triangle me-1"></i>
+                    Esta ação não pode ser desfeita.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirm-delete">Excluir Projeto</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

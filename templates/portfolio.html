@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block title %}Portfólio - NandoLab 3D{% endblock %}
+
+{% block extra_css %}
+<link href="/static/css/portfolio.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<!-- ========== HERO PORTFÓLIO ========== -->
+<section class="portfolio-hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="hero-title">Nosso Portfólio</h1>
+                <p class="hero-subtitle">
+                    Explore nossa coleção de projetos em modelagem 3D. 
+                    Cada peça conta uma história única de criatividade e precisão.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== FILTROS DE CATEGORIA ========== -->
+<section class="py-4 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex flex-wrap justify-content-center gap-2" id="category-filters">
+                    <button class="btn btn-filter active" data-category="all">
+                        <i class="fas fa-th me-2"></i>Todos
+                    </button>
+                    <button class="btn btn-filter" data-category="arquitetura">
+                        <i class="fas fa-building me-2"></i>Arquitetura
+                    </button>
+                    <button class="btn btn-filter" data-category="escultura">
+                        <i class="fas fa-monument me-2"></i>Esculturas
+                    </button>
+                    <button class="btn btn-filter" data-category="prototipos">
+                        <i class="fas fa-cogs me-2"></i>Protótipos
+                    </button>
+                    <button class="btn btn-filter" data-category="decoracao">
+                        <i class="fas fa-home me-2"></i>Decoração
+                    </button>
+                    <button class="btn btn-filter" data-category="personalisados">
+                        <i class="fas fa-user-cog me-2"></i>Personalizados
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== GALERIA DE PROJETOS ========== -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4" id="portfolio-gallery">
+            {% if projetos %}
+                {% for projeto in projetos %}
+                <div class="col-lg-4 col-md-6 portfolio-item" 
+                     data-category="{{ projeto.categoria|lower|replace(' ', '') if projeto.categoria else '' }}">
+                    <div class="card project-card">
+                        <!-- Imagem do projeto -->
+                        <div class="project-image">
+                            <img src="{{ projeto.url_imagem }}" 
+                                 class="card-img-top" 
+                                 alt="{{ projeto.titulo }}"
+                                 onerror="this.src='/static/imagens/projeto-default.jpg'">
+                            <div class="project-overlay">
+                                <a href="#" 
+                                   class="btn-view-project" 
+                                   data-bs-toggle="modal" 
+                                   data-bs-target="#projectModal"
+                                   data-project-id="{{ projeto.id }}"
+                                   data-project-title="{{ projeto.titulo }}"
+                                   data-project-category="{{ projeto.categoria }}"
+                                   data-project-description="{{ projeto.descricao }}"
+                                   data-project-date="{{ projeto.data_conclusao.strftime('%d/%m/%Y') if projeto.data_conclusao else '--/--/----' }}"
+                                   data-project-material="{{ projeto.material }}"
+                                   {% set todas_imagens = [projeto.url_imagem] %}
+                                    {% for img_extra in projeto.lista_imagens_extra %}
+                                    {% set _ = todas_imagens.append('/static/uploads/projetos/' + img_extra) %}
+                                    {% endfor %}
+                                    data-project-images='{{ todas_imagens|tojson|safe }}'
+                                    <i class="fas fa-expand-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Detalhes do projeto -->
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title">{{ projeto.titulo }}</h5>
+                                {% if projeto.destaque %}
+                                <span class="badge bg-warning">
+                                    <i class="fas fa-star"></i>
+                                </span>
+                                {% endif %}
+                            </div>
+                            
+                            <p class="card-text text-muted small">
+                                {{ projeto.descricao[:100] }}{% if projeto.descricao|length > 100 %}...{% endif %}
+                            </p>
+                            
+                            <div class="project-meta">
+                                <span class="badge bg-light text-dark">
+                                    <i class="fas fa-tag me-1"></i>{{ projeto.categoria or "Sem categoria" }}
+                                </span>
+                                {% if projeto.material %}
+                                <span class="badge bg-light text-dark ms-1">
+                                    <i class="fas fa-cube me-1"></i>{{ projeto.material }}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+                {% if projetos|length == 0 %}
+                <div class="col-12 text-center py-5">
+                    <div class="empty-state">
+                        <i class="fas fa-cube fa-3x mb-3 text-muted"></i>
+                        <h4>Nenhum projeto disponível</h4>
+                        <p class="text-muted">Em breve teremos novidades no portfólio!</p>
+                    </div>
+                </div>
+                {% endif %}
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Carregando...</span>
+                    </div>
+                    <p class="mt-2">Carregando projetos...</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- ========== MODAL DETALHES DO PROJETO ========== -->
+<div class="modal fade" id="projectModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalProjectTitle">Projeto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="modalCarousel" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner" id="modalCarouselInner">
+                                <!-- Imagens carregadas via JS -->
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#modalCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#modalCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="project-details">
+                            <h6 class="text-muted mb-2" id="modalProjectCategory">Categoria</h6>
+                            <h4 id="modalProjectTitle2">Título do Projeto</h4>
+                            <p class="mt-3" id="modalProjectDescription">Descrição do projeto...</p>
+                            
+                            <div class="project-specs mt-4">
+                                <h6>Especificações:</h6>
+                                <ul class="list-unstyled" id="modalProjectSpecs">
+                                    <!-- Especificações via JS -->
+                                </ul>
+                            </div>
+                            
+                            <div class="project-meta mt-4">
+                                <small class="text-muted" id="modalProjectMeta">
+                                    <i class="far fa-calendar me-1"></i> Concluído em: <span id="modalProjectDate">--/--/----</span>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <a href="/orcamento" class="btn btn-primary">
+                    <i class="fas fa-comments-dollar me-2"></i>Solicitar Similar
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/portfolio.js"></script>
+{% endblock %}

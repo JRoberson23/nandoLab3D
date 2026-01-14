@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+
+{% block title %}NandoLab 3D - Arte em Modelagem Tridimensional{% endblock %}
+
+{% block extra_css %}
+<link href="/static/css/home.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<!-- ========== HERO SECTION ========== -->
+<section class="hero-3d">
+    <!-- Elementos 3D de fundo -->
+    <div class="hero-bg-element cube-1">
+        <i class="fas fa-cube fa-5x"></i>
+    </div>
+    <div class="hero-bg-element cube-2">
+        <i class="fas fa-dice-d20 fa-5x"></i>
+    </div>
+    <div class="hero-bg-element cube-3">
+        <i class="fas fa-shapes fa-5x"></i>
+    </div>
+    
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 hero-content">
+                <h1 class="hero-title">
+                    Transforme suas <span class="text-warning">ideias</span> em <span class="text-accent">arte 3D</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Modelagem, impressão 3D e peças decorativas únicas. 
+                    Do conceito à realidade, criamos peças que impressionam 
+                    e inspiram.
+                </p>
+                <div class="hero-buttons">
+                    <a href="/portfolio" class="btn btn-primary btn-lg me-3 mb-2">
+                        <i class="fas fa-images me-2"></i>Ver Portfólio
+                    </a>
+                    <a href="/orcamento" class="btn btn-outline-light btn-lg mb-2">
+                        <i class="fas fa-comments-dollar me-2"></i>Solicitar Orçamento
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center mt-5 mt-lg-0">
+                <div class="position-relative d-inline-block">
+                    <div class="logo-float-container">
+                        <div class="logo-float-animation">
+                            <img src="/static/imagens/Logo.png" alt="NandoLab 3D" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== ESTATÍSTICAS ========== -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-card">
+                    <div class="stat-number" data-count="{{ total_projetos }}">0</div>
+                    <div class="stat-label">Projetos Concluídos</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-card">
+                    <div class="stat-number" data-count="{{ total_destaque }}">0</div>
+                    <div class="stat-label">Projetos em Destaque</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-card">
+                    <div class="stat-number" data-count="5">0</div>
+                    <div class="stat-label">Anos de Experiência</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-card">
+                    <div class="stat-number" data-count="12">0</div>
+                    <div class="stat-label">Materiais Diferentes</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== PROJETOS EM DESTAQUE ========== -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="section-title center">Projetos em Destaque</h2>
+                <p class="text-muted">Confira alguns dos nossos trabalhos mais recentes</p>
+            </div>
+        </div>
+        
+        {% if projetos_destaque %}
+        <div class="row g-4" id="featured-projects">
+            {% for projeto in projetos_destaque %}
+            <div class="col-md-4">
+                <div class="project-card">
+                    <!-- IMAGEM DO BANCO DE DADOS -->
+                    <img src="{{ projeto.url_imagem }}" 
+                         class="project-img" 
+                         alt="{{ projeto.titulo }}"
+                         style="height: 250px; object-fit: cover;">
+                    
+                    <div class="project-overlay">
+                        <div>
+                            <h5 class="text-white mb-2">{{ projeto.titulo[:30] }}{% if projeto.titulo|length > 30 %}...{% endif %}</h5>
+                            <p class="text-light small mb-0">{{ projeto.categoria|capitalize }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="p-3">
+                        <h5>{{ projeto.titulo[:40] }}{% if projeto.titulo|length > 40 %}...{% endif %}</h5>
+                        <p class="text-muted small">
+                            <i class="fas fa-tag me-1"></i>{{ projeto.categoria|capitalize }} •
+                            <i class="fas fa-cube me-1 ms-2"></i>{{ projeto.material|upper }}
+                        </p>
+                        <p class="text-secondary" style="font-size: 0.9rem;">
+                            {{ projeto.descricao[:80] }}...
+                        </p>
+                        <a href="/portfolio/{{ projeto.id }}" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-eye me-1"></i>Ver Detalhes
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% else %}
+        <!-- MENSAGEM QUANDO NÃO HÁ PROJETOS EM DESTAQUE -->
+        <div class="text-center py-5">
+            <div class="mb-4">
+                <i class="fas fa-cube fa-4x text-muted mb-3"></i>
+                <h4 class="text-muted">Nenhum projeto em destaque no momento</h4>
+                <p class="text-muted">Em breve teremos novidades!</p>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="text-center mt-5">
+            <a href="/portfolio" class="btn btn-primary btn-lg">
+                <i class="fas fa-images me-2"></i>Ver Todos os Projetos
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ========== DEPOIMENTOS ========== -->
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="section-title center">O Que Nossos Clientes Dizem</h2>
+                <p class="text-muted">Feedback de quem já transformou ideias em realidade</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Depoimento 1 -->
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        <p>"Trabalho excepcional! A maquete ficou perfeita e superou todas as expectativas. 
+                           O Nando foi muito atencioso em cada detalhe do projeto."</p>
+                    </div>
+                    <div class="client-info">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" 
+                             alt="Cliente" 
+                             class="client-avatar">
+                        <div>
+                            <h6 class="mb-0">Carlos Silva</h6>
+                            <small class="text-muted">Arquiteto • Projeto Residencial</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Depoimento 2 -->
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        <p>"Precisava de uma peça específica para minha coleção e o NandoLab entregou 
+                           exatamente o que imaginei. Qualidade impecável e prazo cumprido!"</p>
+                    </div>
+                    <div class="client-info">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                             alt="Cliente" 
+                             class="client-avatar">
+                        <div>
+                            <h6 class="mb-0">Mariana Oliveira</h6>
+                            <small class="text-muted">Colecionadora • Escultura Personalizada</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Depoimento 3 -->
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        <p>"Para nosso protótipo industrial, precisávamos de precisão. O NandoLab 
+                           entregou com qualidade superior e ainda sugeriu melhorias no design."</p>
+                    </div>
+                    <div class="client-info">
+                        <img src="https://randomuser.me/api/portraits/men/67.jpg" 
+                             alt="Cliente" 
+                             class="client-avatar">
+                        <div>
+                            <h6 class="mb-0">Ricardo Santos</h6>
+                            <small class="text-muted">Engenheiro • Prototipagem Industrial</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== CALL TO ACTION ========== -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2 class="cta-title">Pronto para dar vida à sua ideia?</h2>
+            <p class="mb-4" style="font-size: 1.2rem; opacity: 0.9;">
+                Entre em contato agora mesmo para um orçamento personalizado e sem compromisso.
+            </p>
+            <div class="cta-buttons">
+                <a href="/orcamento" class="btn btn-light btn-lg me-3">
+                    <i class="fas fa-comments-dollar me-2"></i>Solicitar Orçamento
+                </a>
+                <!--
+                <a href="/sobre" target="_blank" class="btn btn-outline-light btn-lg">
+                    <i class="fab fa-whatsapp me-2"></i>Conheça Mais
+                </a> -->
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/home.js"></script>
+{% endblock %}

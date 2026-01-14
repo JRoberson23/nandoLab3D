@@ -1,0 +1,349 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Configurações - NandoLab 3D Admin{% endblock %}
+{% block page_title %}Configurações{% endblock %}
+
+{% block extra_css %}
+<link href="/static/css/admin/configuracoes.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-1">
+                <i class="fas fa-cog text-primary me-2"></i>
+                Configurações do Sistema
+            </h2>
+            <p class="text-muted mb-0">Gerencie as configurações do site</p>
+        </div>
+        <div>
+            <button class="btn btn-primary" id="btnSalvarTudo">
+                <i class="fas fa-save me-2"></i> Salvar Todas Alterações
+            </button>
+        </div>
+    </div>
+
+    <!-- Menu de Configurações -->
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush" id="configMenu">
+                        <a href="#geral" class="list-group-item list-group-item-action active" data-bs-toggle="list">
+                            <i class="fas fa-sliders-h me-2"></i> Geral
+                        </a>
+                        <a href="#site" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                            <i class="fas fa-globe me-2"></i> Site
+                        </a>
+                        <a href="#seo" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                            <i class="fas fa-search me-2"></i> SEO
+                        </a>
+                        <a href="#social" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                            <i class="fas fa-share-alt me-2"></i> Redes Sociais
+                        </a>
+                        <a href="#backup" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                            <i class="fas fa-database me-2"></i> Backup
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo das Configurações -->
+        <div class="col-md-9">
+            <div class="tab-content">
+                <!-- GERAL -->
+                <div class="tab-pane fade show active" id="geral">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-sliders-h me-2"></i> Configurações Gerais</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Nome do Site *</label>
+                                <input type="text" class="form-control" id="siteNome" value="NandoLab 3D">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Slogan</label>
+                                <input type="text" class="form-control" id="siteSlogan" placeholder="Inovação em impressão 3D">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Descrição do Site</label>
+                                <textarea class="form-control" id="siteDescricao" rows="3">Impressão 3D de alta qualidade para projetos arquitetônicos, peças personalizadas e protótipos.</textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Fuso Horário</label>
+                                    <select class="form-select" id="siteTimezone">
+                                        <option value="America/Sao_Paulo">Brasília (GMT-3)</option>
+                                        <option value="America/New_York">Nova York (GMT-5)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Idioma</label>
+                                    <select class="form-select" id="siteIdioma">
+                                        <option value="pt-BR">Português (Brasil)</option>
+                                        <option value="en-US">English (US)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="manutencao" checked>
+                                <label class="form-check-label">Site em manutenção</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SITE -->
+                <div class="tab-pane fade" id="site">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-globe me-2"></i> Configurações do Site</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Logo (URL)</label>
+                                <input type="url" class="form-control" id="siteLogo" value="/static/imagens/Logo.png">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Favicon (URL)</label>
+                                <input type="url" class="form-control" id="siteFavicon" value="/static/imagens/favicon.ico">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Cor Primária</label>
+                                    <input type="color" class="form-control form-control-color" id="siteCorPrimaria" value="#2A5C8B">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Cor Secundária</label>
+                                    <input type="color" class="form-control form-control-color" id="siteCorSecundaria" value="#F8B400">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Meta Keywords (separadas por vírgula)</label>
+                                <input type="text" class="form-control" id="siteKeywords" value="impressão 3D, protótipos, arquitetura, maquetes, personalizado">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ABA SEO -->
+                <div class="tab-pane fade" id="seo">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-search me-2"></i> SEO - Otimização para Buscadores</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Melhore sua posição no Google com essas configurações
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Meta Title (Título do Site) *</label>
+                                <input type="text" class="form-control" id="seoTitle" 
+                                    value="NandoLab 3D | Impressão 3D Profissional" maxlength="60">
+                                <small class="text-muted">Máximo 60 caracteres (recomendado)</small>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Meta Description *</label>
+                                <textarea class="form-control" id="seoDescription" rows="3" maxlength="160">
+                Impressão 3D de alta qualidade, maquetes arquitetônicas, protótipos e peças personalizadas. Tecnologia e inovação para seu projeto.
+                                </textarea>
+                                <small class="text-muted">Máximo 160 caracteres. Aparece nos resultados do Google.</small>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Palavras-chave (Keywords)</label>
+                                <input type="text" class="form-control" id="seoKeywords" 
+                                    value="impressão 3D, protótipos, maquetes, arquitetura, impressão 3D serviços, peças personalizadas">
+                                <small class="text-muted">Separadas por vírgula</small>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Google Analytics ID (GA4)</label>
+                                <input type="text" class="form-control" id="seoGoogleAnalytics" 
+                                    placeholder="G-XXXXXXXXXX">
+                                <small class="text-muted">ID de medição do Google Analytics 4</small>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Open Graph Image (URL)</label>
+                                <input type="url" class="form-control" id="seoOgImage" 
+                                    value="/static/imagens/og-image.jpg" placeholder="URL da imagem para compartilhamento">
+                                <small class="text-muted">Imagem que aparece ao compartilhar no WhatsApp/Facebook (1200x630px)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ABA REDES SOCIAIS -->
+                <div class="tab-pane fade" id="social">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-share-alt me-2"></i> Redes Sociais</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Instagram</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">@</span>
+                                        <input type="text" class="form-control" id="socialInstagram" 
+                                            placeholder="nandolab3d">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">URL Completa</label>
+                                    <input type="url" class="form-control" id="socialInstagramUrl" 
+                                        placeholder="https://instagram.com/nandolab3d">
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Facebook</label>
+                                <input type="url" class="form-control" id="socialFacebook" 
+                                    placeholder="https://facebook.com/nandolab3d">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">WhatsApp para Contato</label>
+                                <input type="tel" class="form-control" id="socialWhatsapp" 
+                                    value="(11) 95076-8793">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Link para WhatsApp</label>
+                                <input type="url" class="form-control" id="socialWhatsappLink" 
+                                    value="https://wa.me/5511950768793" placeholder="https://wa.me/5511999999999">
+                                <small class="text-muted">Formato: https://wa.me/5511999999999 (com país: 55)</small>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Mostrar Feed do Instagram no Site</label>
+                                <select class="form-select" id="socialShowFeed">
+                                    <option value="sim">Sim, mostrar últimos projetos</option>
+                                    <option value="nao">Não mostrar</option>
+                                </select>
+                                <small class="text-muted">Exibe automaticamente seus últimos posts do Instagram</small>
+                            </div>
+                            
+                            <!-- Embed do Instagram (opcional) -->
+                            <div class="mb-3">
+                                <label class="form-label">Código Embed do Instagram</label>
+                                <textarea class="form-control" id="socialEmbedCode" rows="4" 
+                                        placeholder='<iframe src="https://..."></iframe>'>
+                                </textarea>
+                                <small class="text-muted">Cole o código embed do Instagram (opcional)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ABA BACKUP -->
+                <div class="tab-pane fade" id="backup">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-database me-2"></i> Backup e Segurança</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                Faça backup regularmente para não perder seus dados!
+                            </div>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="card bg-light">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-download fa-3x text-primary mb-3"></i>
+                                            <h5>Exportar Dados</h5>
+                                            <p class="text-muted">Faça download dos seus dados</p>
+                                            <div class="d-grid gap-2">
+                                                <button class="btn btn-primary" id="btnExportProjetos">
+                                                    <i class="fas fa-cube me-2"></i> Exportar Projetos (JSON)
+                                                </button>
+                                                <button class="btn btn-outline-primary" id="btnExportClientes">
+                                                    <i class="fas fa-users me-2"></i> Exportar Clientes (CSV)
+                                                </button>
+                                                <button class="btn btn-outline-primary" id="btnExportTudo">
+                                                    <i class="fas fa-file-archive me-2"></i> Backup Completo (ZIP)
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="card bg-light">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-history fa-3x text-success mb-3"></i>
+                                            <h5>Backup Automático</h5>
+                                            <p class="text-muted">Configure backups automáticos</p>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Frequência</label>
+                                                <select class="form-select" id="backupFrequencia">
+                                                    <option value="diario">Diário</option>
+                                                    <option value="semanal">Semanal</option>
+                                                    <option value="mensal">Mensal</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Manter últimos backups</label>
+                                                <select class="form-select" id="backupManter">
+                                                    <option value="7">7 dias</option>
+                                                    <option value="15" selected>15 dias</option>
+                                                    <option value="30">30 dias</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <button class="btn btn-success w-100" id="btnAgendarBackup">
+                                                <i class="fas fa-calendar-check me-2"></i> Agendar Backup
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Status do último backup -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Últimos Backups</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Data</th>
+                                                    <th>Tipo</th>
+                                                    <th>Tamanho</th>
+                                                    <th>Ações</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="backupList">
+                                                <!-- Será preenchido via JavaScript -->
+                                                <tr>
+                                                    <td colspan="4" class="text-center text-muted">
+                                                        Nenhum backup realizado ainda
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/admin/configuracoes.js"></script>
+{% endblock %}

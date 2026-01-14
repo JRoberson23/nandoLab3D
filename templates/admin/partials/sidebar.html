@@ -1,0 +1,64 @@
+<!-- templates/admin/partials/sidebar.html -->
+<div class="admin-sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-logo">
+            <i class="fas fa-cube me-2"></i>
+            <span class="logo-text">NandoLab 3D</span>
+        </div>
+    </div>
+    
+    <ul class="sidebar-menu">
+        <li class="menu-item {% if request.url.path == '/admin/dashboard' %}active{% endif %}">
+            <a href="/admin/dashboard">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li class="menu-item {% if 'projetos' in request.url.path %}active{% endif %}">
+            <a href="/admin/projetos">
+                <i class="fas fa-cube"></i>
+                <span>Projetos</span>
+            </a>
+        </li>
+        <li class="menu-item {% if 'pedidos' in request.url.path %}active{% endif %}">
+            <a href="/admin/pedidos">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Pedidos</span>
+                <span class="badge bg-danger ms-auto" id="pedidos-pendentes">0</span>
+            </a>
+        </li>
+        <li class="menu-item {% if 'clientes' in request.url.path %}active{% endif %}">
+            <a href="/admin/clientes">
+                <i class="fas fa-users"></i>
+                <span>Clientes</span>
+            </a>
+        </li>
+        <li class="menu-item {% if 'depoimentos' in request.url.path %}active{% endif %}">
+            <a href="/admin/depoimentos">
+                <i class="fas fa-comment"></i>
+                <span>Depoimentos</span>
+            </a>
+        </li>
+        <li class="menu-item {% if 'configuracoes' in request.url.path %}active{% endif %}">
+            <a href="/admin/configuracoes">
+                <i class="fas fa-cog"></i>
+                <span>Configurações</span>
+            </a>
+        </li>
+    </ul>
+    
+    <div class="sidebar-footer">
+        <div class="user-info">
+            <div class="user-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="user-details">
+                <strong>{{ request.session.get('admin_nome', 'Admin') }}</strong>
+                <small>Online</small>
+            </div>
+        </div>
+        <a href="/admin/logout" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+        </a>
+    </div>
+</div>

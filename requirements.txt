@@ -1,0 +1,27 @@
+# requirements.txt - VERSÃO PARA RENDER.COM
+
+# FastAPI core
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# Banco de dados
+sqlalchemy==2.0.23
+psycopg2-binary==2.9.9  
+
+# Templates e ambiente
+jinja2==3.1.2
+python-dotenv==1.0.0
+
+# Middleware e sessões
+starlette==0.27.0
+itsdangerous==2.1.2
+
+# Hash de senhas
+passlib[bcrypt]==1.7.4
+
+# Arquivos estáticos
+aiofiles==23.2.1
+
+# CORS
+fastapi-cors==0.1.0

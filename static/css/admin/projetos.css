@@ -1,0 +1,242 @@
+/* ============================================
+   ADMIN - PÁGINA DE PROJETOS
+   ============================================ */
+
+/* Thumbnail dos projetos */
+.project-thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+}
+
+.project-thumb.no-image {
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    font-size: 1.2rem;
+}
+
+/* Descrição do projeto */
+.project-description {
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin: 5px 0 0;
+    line-height: 1.4;
+}
+
+/* Badge de categoria */
+.category-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #e9ecef;
+    color: #495057;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Status badges */
+.status-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.status-badge.published {
+    background: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.2);
+}
+
+.status-badge.draft {
+    background: rgba(108, 117, 125, 0.1);
+    color: #6c757d;
+    border: 1px solid rgba(108, 117, 125, 0.2);
+}
+
+.status-badge.featured {
+    background: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+    border: 1px solid rgba(255, 193, 7, 0.2);
+}
+
+/* Datas */
+.date-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.completion-date {
+    font-weight: 500;
+    color: #212529;
+}
+
+.no-date {
+    color: #6c757d;
+    font-style: italic;
+}
+
+.created-date {
+    color: #6c757d;
+    font-size: 0.8rem;
+    margin-top: 3px;
+}
+
+/* Ações */
+.actions-cell {
+    white-space: nowrap;
+}
+
+.actions-container {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.btn-action {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dee2e6;
+    background: white;
+    color: #6c757d;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.btn-action.edit:hover {
+    border-color: #0d6efd;
+    color: #0d6efd;
+    background: rgba(13, 110, 253, 0.05);
+}
+
+.btn-action.delete:hover {
+    border-color: #dc3545;
+    color: #dc3545;
+    background: rgba(220, 53, 69, 0.05);
+}
+
+.btn-action.view:hover {
+    border-color: #6c757d;
+    color: #6c757d;
+    background: rgba(108, 117, 125, 0.05);
+}
+
+.btn-action.publish:hover {
+    border-color: #28a745;
+    color: #28a745;
+    background: rgba(40, 167, 69, 0.05);
+}
+
+.btn-action.unpublish:hover {
+    border-color: #ffc107;
+    color: #ffc107;
+    background: rgba(255, 193, 7, 0.05);
+}
+
+/* Estado vazio */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.empty-state i {
+    color: #6c757d;
+    margin-bottom: 20px;
+}
+
+.empty-state h4 {
+    color: #495057;
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    color: #6c757d;
+    max-width: 400px;
+    margin: 0 auto 20px;
+}
+
+/* Paginação */
+.pagination-container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination .page-link {
+    color: #2A5C8B;
+    border: 1px solid #dee2e6;
+    margin: 0 3px;
+    border-radius: 6px;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #2A5C8B;
+    border-color: #2A5C8B;
+    color: white;
+}
+
+.pagination .page-link:hover {
+    background-color: #f8f9fa;
+    color: #2A5C8B;
+}
+
+/* Filtros */
+.search-box {
+    max-width: 300px;
+}
+
+/* Modal */
+.warning-text {
+    color: #dc3545;
+    font-size: 0.9rem;
+    margin: 10px 0 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .actions-container {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .btn-action {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .project-thumb {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .status-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+}

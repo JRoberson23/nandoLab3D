@@ -1,0 +1,216 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Pedidos - NandoLab 3D Admin{% endblock %}
+{% block page_title %}Pedidos{% endblock %}
+
+{% block extra_css %}
+<link href="/static/css/admin/pedidos.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Cards de Status -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Pendentes
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ pedidos_pendentes }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clock fa-2x text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Aprovados
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ pedidos_aprovados }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-check-circle fa-2x text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Concluídos
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ pedidos_concluidos }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-check-double fa-2x text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Total
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_pedidos }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-shopping-cart fa-2x text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabela de Pedidos -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">
+                {% if filtro_status %}
+                    Pedidos {{ filtro_status|title }}
+                {% else %}
+                    Todos os Pedidos
+                {% endif %}
+            </h6>
+            <div class="btn-group">
+                <a href="/admin/pedidos" class="btn btn-sm btn-outline-primary {% if not filtro_status %}active{% endif %}">Todos</a>
+                <a href="/admin/pedidos?status=pendente" class="btn btn-sm btn-outline-warning {% if filtro_status == 'pendente' %}active{% endif %}">Pendentes</a>
+                <a href="/admin/pedidos?status=aprovado" class="btn btn-sm btn-outline-primary {% if filtro_status == 'aprovado' %}active{% endif %}">Aprovados</a>
+                <a href="/admin/pedidos?status=concluido" class="btn btn-sm btn-outline-success {% if filtro_status == 'concluido' %}active{% endif %}">Concluídos</a>
+            </div>
+        </div>
+        <div class="card-body">
+            {% if pedidos %}
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Projeto</th>
+                            <th>Material</th>
+                            <th>Status</th>
+                            <th>Data</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pedido in pedidos %}
+                        <tr>
+                            <td>{{ pedido.id }}</td>
+                            <td>
+                                <strong>{{ pedido.nome_cliente }}</strong><br>
+                                <small class="text-muted">{{ pedido.email }}</small>
+                            </td>
+                            <td>{{ pedido.titulo_projeto }}</td>
+                            <td>{{ pedido.material_desejado or '--' }}</td>
+                            <td>
+                                {% if pedido.status == 'pendente' %}
+                                <span class="badge badge-warning">Pendente</span>
+                                {% elif pedido.status == 'aprovado' %}
+                                <span class="badge badge-primary">Aprovado</span>
+                                {% elif pedido.status == 'concluido' %}
+                                <span class="badge badge-success">Concluído</span>
+                                {% else %}
+                                <span class="badge badge-secondary">{{ pedido.status }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ pedido.data_pedido.strftime('%d/%m/%Y') if pedido.data_pedido else '--' }}</td>
+                            <td>
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-info btn-ver-pedido" title="Ver detalhes" 
+                                        data-pedido-id="{{ pedido.id }}">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                
+                                {% if pedido.status == 'pendente' %}
+                                <button type="button" class="btn btn-success btn-aprovar-pedido" title="Aprovar pedido"
+                                        data-pedido-id="{{ pedido.id }}">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-rejeitar-pedido" title="Rejeitar pedido"
+                                        data-pedido-id="{{ pedido.id }}">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                {% endif %}
+                                
+                                {% if pedido.status == 'aprovado' %}
+                                <button type="button" class="btn btn-success btn-concluir-pedido" title="Marcar como concluído"
+                                        data-pedido-id="{{ pedido.id }}">
+                                    <i class="fas fa-check-double"></i>
+                                </button>
+                                {% endif %}
+                                
+                                <button type="button" class="btn btn-warning btn-editar-pedido" title="Editar"
+                                        data-pedido-id="{{ pedido.id }}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                        </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-shopping-cart fa-4x text-muted mb-3"></i>
+                <h5>Nenhum pedido encontrado</h5>
+                <p class="text-muted">
+                    {% if filtro_status %}
+                        Não há pedidos com status "{{ filtro_status }}"
+                    {% else %}
+                        Nenhum pedido cadastrado ainda
+                    {% endif %}
+                </p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Detalhes do Pedido -->
+<div class="modal fade" id="pedidoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalhes do Pedido</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="pedidoDetalhes">
+                <!-- Conteúdo será preenchido via JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" id="btnEnviarOrcamento">Enviar Orçamento</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/admin/pedidos.js"></script>
+{% endblock %}

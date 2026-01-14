@@ -1,0 +1,314 @@
+/* ============================================
+   PÁGINA INICIAL - ESTILOS ESPECÍFICOS
+   ============================================ */
+
+/* HERO SECTION */
+.hero-3d {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a5a 100%);
+    color: white;
+    padding: 80px 0 60px;
+    margin-top: -20px;
+    min-height: auto;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding-top: 20px;
+}
+
+.hero-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.hero-title .text-warning {
+    color: var(--secondary-color) !important;
+}
+
+.hero-title .text-accent {
+    color: var(--accent-color) !important;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    margin-bottom: 2.5rem;
+    max-width: 600px;  
+    line-height: 1.8;
+    font-weight: 300;
+}
+
+/* CUBOS DE FUNDO (girando 360°) */
+.hero-bg-element {
+    position: absolute;
+    opacity: 0.1;
+    animation: bg-cube-rotate 20s infinite linear;
+}
+
+.cube-1 {
+    top: 10%;
+    left: 5%;
+    width: 100px;
+    height: 100px;
+    animation-delay: 0s;
+}
+
+.cube-2 {
+    top: 60%;
+    right: 10%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 5s;
+    animation-direction: reverse;
+}
+
+.cube-3 {
+    bottom: 20%;
+    left: 15%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 10s;
+}
+
+@keyframes bg-cube-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ESTATÍSTICAS */
+.stats-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 30px 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stats-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+    display: block;
+}
+
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+    .stat-number {
+        -webkit-text-fill-color: transparent;
+        -moz-text-fill-color: transparent;
+        color: transparent;
+    }
+}
+
+.stat-label {
+    font-size: 1rem;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* CARDS DE PROJETOS */
+.project-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    height: 100%;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.project-img {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-img {
+    transform: scale(1.05);
+}
+
+.project-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+}
+
+.project-card:hover .project-overlay {
+    opacity: 1;
+}
+
+/* DEPOIMENTOS */
+.testimonial-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    height: 100%;
+    position: relative;
+}
+
+.testimonial-card::before {
+    content: "❝";
+    font-size: 4rem;
+    color: var(--primary-color);
+    opacity: 0.1;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+}
+
+.client-info {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.client-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 3px solid var(--primary-color);
+}
+
+/* CALL TO ACTION */
+.cta-section {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a5a 100%);
+    color: white;
+    border-radius: 20px;
+    padding: 60px 40px;
+    margin: 80px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+}
+
+.cta-section::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -30%;
+    width: 150px;
+    height: 150px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 50%;
+}
+
+.cta-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.cta-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* ============================================
+   RESPONSIVIDADE
+   ============================================ */
+
+@media (max-width: 768px) {
+    .hero-bg-element {
+        display: none;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+        padding: 0 10px;
+    }
+    
+    .cta-title {
+        font-size: 2rem;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+    }
+    
+    .hero-3d {
+        padding: 60px 0 40px;
+    }
+    
+    /* Logo menor em mobile */
+    .logo-gentle-float img,
+    .logo-3d-spin img {
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-3d {
+        padding: 50px 0 30px;
+    }
+
+    .hero-title {
+        font-size: 1.8rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .hero-buttons .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .stats-card {
+        margin-bottom: 15px;
+    }
+    
+    /* Logo ainda menor */
+    .logo-gentle-float img,
+    .logo-3d-spin img {
+        max-width: 150px;
+    }
+}

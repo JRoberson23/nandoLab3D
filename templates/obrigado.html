@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Obrigado! - NandoLab 3D{% endblock %}
+
+{% block extra_css %}
+<link href="/static/css/services.css" rel="stylesheet">
+<link href="/static/css/obrigado.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Card de confirmação -->
+            <div class="confirmation-card shadow-lg">
+                <div class="card-body p-5 text-center">
+                    <!-- Ícone animado -->
+                    <div class="confirmation-icon mb-4">
+                        <i class="bi bi-check-circle-fill text-white" style="font-size: 3rem;"></i>
+                    </div>
+                    
+                    <!-- Título -->
+                    <h1 class="display-4 fw-bold text-primary mb-3">Orçamento Enviado!</h1>
+                    
+                    <!-- Mensagem personalizada -->
+                    <p class="lead mb-4" id="personal-message">
+                        Obrigado pelo seu interesse em nossos serviços!
+                    </p>
+                    
+                    <!-- Número do pedido (se disponível) -->
+                    <div class="alert alert-info mb-4" id="pedido-info" style="display: none;">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <strong>Nº do Pedido:</strong> <span id="pedido-numero"></span>
+                    </div>
+                    
+                    <!-- Linha do tempo -->
+                    <div class="timeline mt-5 mb-5">
+                        <h4 class="mb-4">Próximos Passos:</h4>
+                        
+                        <div class="timeline-item">
+                            <h5 class="text-primary">✅ Confirmação por Email</h5>
+                            <p>Você receberá uma cópia desta solicitação em seu email.</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h5 class="text-primary">⏳ Análise do Projeto</h5>
+                            <p>Nossa equipe analisará sua solicitação em até 24 horas úteis.</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h5 class="text-primary">📞 Contato Personalizado</h5>
+                            <p>Entraremos em contato para discutir detalhes e tirar dúvidas.</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h5 class="text-primary">💰 Orçamento Detalhado</h5>
+                            <p>Enviaremos uma proposta personalizada com prazo e valor.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Dicas úteis -->
+                    <div class="tips-card border rounded p-4 mb-5">
+                        <h5 class="mb-3">💡 Dicas enquanto aguarda:</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Verifique sua caixa de spam</li>
+                            <li class="mb-2"><i class="bi bi-images text-primary me-2"></i> <a href="/portfolio" class="text-decoration-none">Conheça nosso portfólio</a></li>
+                            <li><i class="bi bi-question-circle text-primary me-2"></i> Dúvidas? <a href="mailto:contato@nandolab3d.com" class="text-decoration-none">contato@nandolab3d.com</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Botões de ação -->
+                    <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+                        <a href="/" class="btn btn-primary btn-lg px-4">
+                            <i class="bi bi-house me-2"></i> Página Inicial
+                        </a>
+                        <a href="/portfolio" class="btn btn-outline-primary btn-lg px-4">
+                            <i class="bi bi-images me-2"></i> Ver Portfólio
+                        </a>
+                        <a href="/orcamento" class="btn btn-outline-secondary btn-lg px-4">
+                            <i class="bi bi-plus-circle me-2"></i> Novo Orçamento
+                        </a>
+                    </div>
+                    
+                    <!-- WhatsApp direto -->
+                    <div class="mt-5 pt-4 border-top">
+                        <p class="text-muted mb-2">Precisa de resposta mais rápida?</p>
+                        <a href="https://wa.me/5511999999999?text=Olá! Gostaria de falar sobre meu orçamento enviado." 
+                           class="btn btn-success" 
+                           target="_blank">
+                            <i class="bi bi-whatsapp me-2"></i> Falar no WhatsApp
+                        </a>
+                        <p class="small text-muted mt-2">Substitua o número pelo seu WhatsApp comercial</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contador para redirecionamento -->
+            <div class="text-center mt-4">
+                <p class="text-muted" id="redirect-counter">
+                    Você será redirecionado para a página inicial em <span id="countdown">10</span> segundos...
+                </p>
+                <button class="btn btn-link" onclick="cancelRedirect()">
+                    <i class="bi bi-x-circle me-1"></i> Cancelar redirecionamento
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/obrigado.js"></script>
+{% endblock %}

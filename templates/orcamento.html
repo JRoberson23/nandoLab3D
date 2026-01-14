@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block extra_css %}
+<link href="/static/css/services.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary">Solicitar Orçamento</h1>
+        <p class="lead">Preencha os detalhes do seu projeto e receba um orçamento personalizado em até 24h.</p>
+    </div>
+
+
+
+    <!-- Status do Envio -->
+    <div id="form-status" class="mb-4"></div>
+
+    <!-- Formulário -->
+    <!-- ALTERE A LINHA ABAIXO: adicione enctype -->
+    <form id="orcamentoForm" action="https://formspree.io/f/mdakqdyw" method="POST" enctype="multipart/form-data">
+        <!-- REMOVI O _next - Redirecionamento controlado pelo JS -->
+        <input type="hidden" name="_subject" value="Novo Orçamento - NandoLab 3D">
+        <input type="hidden" name="_language" value="pt">
+        
+        <div class="row g-4">
+            <!-- Dados Pessoais -->
+            <div class="col-md-6">
+                <h4 class="mb-3">Seus Dados</h4>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome Completo" required>
+                    <label for="nome">Nome Completo *</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" required>
+                    <label for="email">E-mail *</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="Telefone">
+                    <label for="telefone">Telefone/WhatsApp</label>
+                </div>
+            </div>
+
+            <!-- Detalhes do Projeto -->
+            <div class="col-md-6">
+                <h4 class="mb-3">Detalhes do Projeto</h4>
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="tipo_projeto" name="tipo_projeto" required>
+                        <option value="">Selecione...</option>
+                        <option value="impressao">Impressão 3D</option>
+                        <option value="modelagem">Modelagem 3D</option>
+                        <option value="prototipo">Protótipo</option>
+                        <option value="lote">Produção em Lote</option>
+                    </select>
+                    <label for="tipo_projeto">Tipo de Projeto *</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="projeto" name="projeto" placeholder="Descrição" style="height: 120px" required></textarea>
+                    <label for="projeto">Descrição do Projeto *</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="prazo" name="prazo">
+                        <option value="">Sem urgência</option>
+                        <option value="7">1 semana</option>
+                        <option value="15">15 dias</option>
+                        <option value="30">1 mês</option>
+                        <option value="urgente">Urgente</option>
+                    </select>
+                    <label for="prazo">Prazo Desejado</label>
+                </div>
+            </div>
+
+            <!-- ADICIONE ESTA NOVA SEÇÃO AQUI -->
+            <div class="col-12">
+                <h4 class="mb-3">Imagem de Referência (Opcional)</h4>
+                <div class="mb-3">
+                    <input type="file" 
+                           class="form-control" 
+                           id="imagem" 
+                           name="imagem" 
+                           accept="image/*"
+                           onchange="previewImage(event)">
+                    <small class="text-muted">Formatos aceitos: JPG, PNG, GIF (Máx. 5MB)</small>
+                </div>
+                <div id="imagePreview" class="text-center" style="display: none;">
+                    <img id="previewImage" class="img-thumbnail" style="max-width: 200px; margin-bottom: 10px;">
+                    <br>
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeImage()">
+                        <i class="fas fa-times me-1"></i> Remover Imagem
+                    </button>
+                </div>
+            </div>
+            <!-- FIM DA NOVA SEÇÃO -->
+
+            <!-- Botão de Envio -->
+            <div class="col-12 text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-lg px-5">
+                    <i class="fas fa-paper-plane me-2"></i> Enviar Solicitação
+                </button>
+                <p class="small text-muted mt-2">Entraremos em contato em até 24 horas úteis</p>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/orcamento.js"></script>
+<script>
+// Funções simples para preview da imagem
+function previewImage(event) {
+    const input = event.target;
+    const preview = document.getElementById('previewImage');
+    const previewContainer = document.getElementById('imagePreview');
+    
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            previewContainer.style.display = 'block';
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function removeImage() {
+    document.getElementById('imagem').value = '';
+    document.getElementById('imagePreview').style.display = 'none';
+}
+</script>
+{% endblock %}

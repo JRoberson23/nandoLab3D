@@ -1,0 +1,338 @@
+{% extends "base.html" %}
+
+{% block title %}Sobre - NandoLab 3D{% endblock %}
+
+{% block extra_css %}
+<link href="/static/css/sobre.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<!-- ========== HERO SOBRE ========== -->
+<section class="sobre-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="hero-title">Conheça o NandoLab 3D</h1>
+                <p class="hero-subtitle">
+                    Transformando ideias em realidade através da arte da modelagem 3D. 
+                    Cada projeto é uma história de criatividade e precisão.
+                </p>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="hero-3d-elements">
+                    <div class="floating-cube">
+                        <i class="fas fa-cube fa-4x text-white"></i>
+                    </div>
+                    
+                    <div class="logo-float-container-animation-right">
+                        <div class="logo-float-animation">
+                            <img src="/static/imagens/Logo.png" alt="NandoLab 3D" class="img-fluid">
+                        </div>
+                    </div>
+                    
+                    <div class="floating-sphere">
+                        <i class="fas fa-circle fa-3x text-white"></i>
+                    </div>
+                    <div class="floating-cylinder">
+                        <i class="fas fa-certificate fa-3x text-white"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== NOSSA HISTÓRIA ========== -->
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <!-- COLUNA ÚNICA SEM FOTO -->
+            <div class="col-lg-12">
+                <h2 class="section-title">Nossa História</h2>
+                
+                <!-- Citação do Fernando (opcional, se quiser manter) -->
+                <div class="founder-quote mb-4 p-4 bg-light rounded">
+                    <i class="fas fa-quote-left fa-2x text-primary mb-3"></i>
+                    <p class="quote-text lead">
+                        "Acredito que cada ideia merece ser transformada em algo tangível. 
+                        A modelagem 3D é a ponte entre a imaginação e a realidade."
+                    </p>
+                    <p class="text-end text-muted mt-3">
+                        <strong>Fernando Motta</strong> - Fundador & Artista 3D
+                    </p>
+                </div>
+                
+                <!-- Timeline -->
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">2018</div>
+                        <div class="timeline-content">
+                            <h5>O Início</h5>
+                            <p>
+                                Tudo começou com uma impressora 3D caseira e muita curiosidade. 
+                                Fernando (Nando) começou a explorar o mundo da modelagem 3D como hobby.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">2020</div>
+                        <div class="timeline-content">
+                            <h5>Primeiros Projetos</h5>
+                            <p>
+                                Com a pandemia, começou a criar peças decorativas para amigos e familiares. 
+                                O feedback positivo inspirou a transformar o hobby em negócio.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">2022</div>
+                        <div class="timeline-content">
+                            <h5>Nascimento do NandoLab</h5>
+                            <p>
+                                Oficialização da marca e investimento em equipamentos profissionais. 
+                                Primeiros projetos comerciais com arquitetos e designers.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-content">
+                            <h5>Expansão e Reconhecimento</h5>
+                            <p>
+                                Participação em feiras de tecnologia, parcerias com empresas 
+                                e mais de 100 projetos concluídos com sucesso.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== MISSÃO, VISÃO, VALORES ========== -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="section-title center">Nossa Essência</h2>
+                <p class="text-muted">O que nos move e nos define</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Missão -->
+            <div class="col-lg-4">
+                <div class="essence-card">
+                    <div class="essence-icon mission">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3 class="essence-title">Missão</h3>
+                    <p class="essence-text">
+                        Transformar ideias em peças únicas através da tecnologia 3D, 
+                        oferecendo qualidade, criatividade e atenção aos detalhes em cada projeto.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Visão -->
+            <div class="col-lg-4">
+                <div class="essence-card">
+                    <div class="essence-icon vision">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3 class="essence-title">Visão</h3>
+                    <p class="essence-text">
+                        Ser referência em modelagem 3D artística no Brasil, 
+                        reconhecida pela inovação e excelência em cada criação.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Valores -->
+            <div class="col-lg-4">
+                <div class="essence-card">
+                    <div class="essence-icon values">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="essence-title">Valores</h3>
+                    <ul class="essence-values">
+                        <li><i class="fas fa-check"></i> Criatividade sem limites</li>
+                        <li><i class="fas fa-check"></i> Qualidade em cada detalhe</li>
+                        <li><i class="fas fa-check"></i> Compromisso com prazos</li>
+                        <li><i class="fas fa-check"></i> Atendimento personalizado</li>
+                        <li><i class="fas fa-check"></i> Inovação constante</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== EQUIPAMENTOS & TECNOLOGIA ========== -->
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="section-title center">Nossa Tecnologia</h2>
+                <p class="text-muted">Ferramentas que utilizamos para criar</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Impressoras -->
+            <div class="col-md-6">
+                <div class="tech-card">
+                    <div class="tech-icon">
+                        <i class="fas fa-print fa-3x"></i>
+                    </div>
+                    <div class="tech-content">
+                        <h4>Impressoras 3D</h4>
+                        <p class="tech-description">
+                            Trabalhamos com impressoras FDM de alta precisão e 
+                            impressoras resin SLA para detalhes finos.
+                        </p>
+                        <div class="tech-specs">
+                            <span class="tech-badge">Creality Ender 3</span>
+                            <span class="tech-badge">Anycubic Photon</span>
+                            <span class="tech-badge">Prusa i3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Software -->
+            <div class="col-md-6">
+                <div class="tech-card">
+                    <div class="tech-icon">
+                        <i class="fas fa-laptop-code fa-3x"></i>
+                    </div>
+                    <div class="tech-content">
+                        <h4>Software</h4>
+                        <p class="tech-description">
+                            Utilizamos as melhores ferramentas de modelagem 3D 
+                            do mercado para garantir qualidade profissional.
+                        </p>
+                        <div class="tech-specs">
+                            <span class="tech-badge">Blender</span>
+                            <span class="tech-badge">Fusion 360</span>
+                            <span class="tech-badge">ZBrush</span>
+                            <span class="tech-badge">Cura</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Materiais -->
+            <div class="col-md-6">
+                <div class="tech-card">
+                    <div class="tech-icon">
+                        <i class="fas fa-cubes fa-3x"></i>
+                    </div>
+                    <div class="tech-content">
+                        <h4>Materiais</h4>
+                        <p class="tech-description">
+                            Trabalhamos com diversos filamentos e resinas para 
+                            atender às necessidades específicas de cada projeto.
+                        </p>
+                        <div class="tech-specs">
+                            <span class="tech-badge">PLA</span>
+                            <span class="tech-badge">ABS</span>
+                            <span class="tech-badge">PETG</span>
+                            <span class="tech-badge">Resina</span>
+                            <span class="tech-badge">TPU</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Acabamento -->
+            <div class="col-md-6">
+                <div class="tech-card">
+                    <div class="tech-icon">
+                        <i class="fas fa-paint-roller fa-3x"></i>
+                    </div>
+                    <div class="tech-content">
+                        <h4>Acabamento</h4>
+                        <p class="tech-description">
+                            Oferecemos serviços de pós-processamento para 
+                            peças com acabamento profissional e pronto para uso.
+                        </p>
+                        <div class="tech-specs">
+                            <span class="tech-badge">Lixamento</span>
+                            <span class="tech-badge">Pintura</span>
+                            <span class="tech-badge">Envernizamento</span>
+                            <span class="tech-badge">Montagem</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== DEPOIMENTO DE CLIENTE ========== -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="testimonial-featured">
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left fa-3x text-primary mb-4"></i>
+                        <p class="testimonial-text">
+                            "Trabalhar com o NandoLab foi uma experiência excepcional. 
+                            Não apenas entenderam minha visão, mas a melhoraram com 
+                            sugestões técnicas que eu nunca teria imaginado. 
+                            A peça final superou todas as expectativas e agora é 
+                            o centro das atenções no meu escritório."
+                        </p>
+                        <div class="testimonial-author">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
+                                 alt="Cliente" 
+                                 class="author-avatar">
+                            <div>
+                                <h5 class="author-name">Roberto Almeida</h5>
+                                <p class="author-role">CEO • TechSolutions MG</p>
+                                <div class="author-rating">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== CTA FINAL ========== -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2 class="cta-title">Tem um projeto em mente?</h2>
+            <p class="mb-4" style="font-size: 1.2rem; opacity: 0.9;">
+                Vamos conversar sobre como podemos transformar sua ideia em realidade.
+            </p>
+            <div class="cta-buttons">
+                <a href="/orcamento" class="btn btn-light btn-lg me-3">
+                    <i class="fas fa-comments-dollar me-2"></i>Solicitar Orçamento
+                </a>
+                <a href="/portfolio" class="btn btn-outline-light btn-lg">
+                    <i class="fas fa-images me-2"></i>Ver Nossos Trabalhos
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/sobre.js"></script>
+{% endblock %}

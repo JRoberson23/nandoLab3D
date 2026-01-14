@@ -1,0 +1,632 @@
+/* ============================================
+                  CSS BASE DO ADMIN 
+   ============================================ */
+
+/* Variáveis CSS */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --success-color: #2ecc71;
+    --danger-color: #e74c3c;
+    --warning-color: #f39c12;
+    --info-color: #1abc9c;
+    --sidebar-width: 280px;
+    --topbar-height: 70px;
+}
+
+/* Reset e estilos base */
+.admin-body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* Container principal */
+.admin-container {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ===== SIDEBAR ===== */
+.admin-sidebar {
+    width: var(--sidebar-width);
+    background: linear-gradient(180deg, var(--primary-color) 0%, #1a252f 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1000;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Logo da sidebar */
+.sidebar-header {
+    padding: 25px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar-logo i {
+    font-size: 1.8rem;
+    color: var(--secondary-color);
+}
+
+/* Menu da sidebar */
+.sidebar-menu {
+    list-style: none;
+    padding: 20px 0;
+    margin: 0;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.menu-item {
+    margin: 5px 15px;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.menu-item:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateX(5px);
+}
+
+.menu-item.active {
+    background: var(--secondary-color);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+.menu-item a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.menu-item a i {
+    width: 25px;
+    font-size: 1.1rem;
+    margin-right: 12px;
+    text-align: center;
+}
+
+.menu-item.active a {
+    color: white;
+}
+
+.menu-item .badge {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+}
+
+/* Rodapé da sidebar */
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-details strong {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.user-details small {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.7);
+}
+
+.logout-btn {
+    color: rgba(255,255,255,0.7);
+    font-size: 1.2rem;
+    transition: color 0.2s;
+    padding: 8px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.05);
+}
+
+.logout-btn:hover {
+    color: white;
+    background: rgba(255,255,255,0.1);
+    text-decoration: none;
+}
+
+/* Prompt de login na sidebar */
+.sidebar-login-prompt {
+    margin-top: auto;
+    padding: 20px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    margin: 20px;
+}
+
+/* ===== MAIN CONTENT ===== */
+.admin-main {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== TOPBAR ===== */
+.admin-topbar {
+    background: white;
+    padding: 0 30px;
+    height: var(--topbar-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    border-bottom: 1px solid #eee;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.topbar-left h1 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.topbar-left h1 i {
+    color: var(--secondary-color);
+}
+
+/* Botão sidebar toggle (os 3 pontos) */
+#sidebarToggle {
+    background: transparent;
+    border: 2px solid #dee2e6;
+    color: #6c757d;
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    padding: 0;
+}
+
+#sidebarToggle:hover {
+    background: #f8f9fa;
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+    transform: scale(1.05);
+}
+
+#sidebarToggle i {
+    font-size: 1.2rem;
+}
+
+/* Lado direito da topbar */
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+/* Usuário admin */
+.admin-user {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.admin-user span {
+    font-weight: 500;
+    color: #495057;
+}
+
+/* Dropdown do usuário (os 3 pontos verticais) */
+.admin-user .dropdown-toggle {
+    background: transparent;
+    border: none;
+    color: #6c757d;
+    font-size: 1.8rem;
+    padding: 5px;
+    transition: all 0.2s ease;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-user .dropdown-toggle:hover {
+    color: var(--secondary-color);
+    background: #f8f9fa;
+    transform: scale(1.1);
+}
+
+.admin-user .dropdown-toggle::after {
+    display: none !important; /* Remove a setinha padrão */
+}
+
+.admin-user .dropdown-menu {
+    border: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 10px 0;
+    margin-top: 10px;
+    min-width: 220px;
+}
+
+.admin-user .dropdown-item {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+}
+
+.admin-user .dropdown-item:hover {
+    background: #f8f9fa;
+    padding-left: 25px;
+}
+
+.admin-user .dropdown-item-text {
+    padding: 8px 20px;
+    color: #6c757d;
+}
+
+/* ===== CONTENT AREA ===== */
+.admin-content {
+    flex: 1;
+    padding: 30px;
+    background: #f8f9fa;
+    overflow-y: auto;
+}
+
+/* Alertas */
+#admin-alert-container {
+    margin-bottom: 25px;
+}
+
+#admin-alert-message {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Overlay para mobile */
+.sidebar-overlay {
+    display: none;
+}
+
+
+/* ============================================
+   CORREÇÕES DE RESPONSIVIDADE - VERSÃO OTIMIZADA
+   ============================================ */
+
+/* ===== MENU LATERAL MOBILE ===== */
+@media (max-width: 1199px) {
+    .admin-container {
+        position: relative;
+        overflow-x: hidden;
+    }
+    
+    .admin-sidebar {
+        position: fixed;
+        left: -280px;
+        top: 0;
+        height: 100vh;
+        z-index: 1050;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 5px 0 25px rgba(0,0,0,0.15);
+    }
+    
+    .admin-sidebar.active {
+        left: 0;
+    }
+    
+    .admin-main {
+        margin-left: 0 !important;
+        width: 100%;
+        transition: margin-left 0.3s ease;
+    }
+    
+    /* Overlay para fechar menu */
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 1049;
+        backdrop-filter: blur(2px);
+        display: none;
+    }
+    
+    .sidebar-overlay.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+    
+    /* Botão toggle sempre visível em mobile */
+    #sidebarToggle {
+        display: flex !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    #sidebarToggle {
+        display: none !important;
+    }
+    
+    .sidebar-overlay {
+        display: none !important;
+    }
+}
+
+/* ===== TOPBAR MOBILE ===== */
+@media (max-width: 768px) {
+    .admin-topbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    .topbar-left {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .topbar-right {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    /* Ocultar nome do usuário em mobile */
+    .admin-user span:not(.dropdown-toggle) {
+        display: none;
+    }
+    
+    /* Ajustar dropdown do usuário */
+    .admin-user .dropdown-toggle {
+        padding: 8px;
+    }
+}
+
+/* ===== TABELAS RESPONSIVAS ===== */
+@media (max-width: 768px) {
+    /* Container para tabelas roláveis */
+    .table-responsive {
+        margin: 0 -20px;
+        width: calc(100% + 40px);
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Indicador visual de scroll */
+    .table-responsive::-webkit-scrollbar {
+        height: 6px;
+    }
+    
+    .table-responsive::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 10px;
+    }
+    
+    /* Forçar largura mínima para tabelas */
+    .admin-table {
+        min-width: 700px;
+    }
+    
+    /* Ajustar células de ação */
+    .actions-cell {
+        min-width: 120px;
+    }
+    
+    .btn-action {
+        width: 36px;
+        height: 36px;
+        margin: 2px;
+    }
+}
+
+/* ===== DASHBOARD MOBILE ===== */
+@media (max-width: 768px) {
+    .row.g-3 {
+        margin-left: -10px;
+        margin-right: -10px;
+    }
+    
+    .col-md-3, .col-md-6 {
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-bottom: 15px;
+    }
+    
+    /* Cards menores */
+    .stat-card {
+        padding: 15px !important;
+    }
+    
+    .stat-card h3 {
+        font-size: 1.5rem;
+    }
+    
+    .stat-icon {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Welcome card ajustado */
+    .welcome-card {
+        padding: 20px !important;
+        margin: 0 -20px;
+        border-radius: 0 !important;
+    }
+}
+
+/* ===== FORMULÁRIOS MOBILE ===== */
+@media (max-width: 768px) {
+    .modal-dialog {
+        margin: 10px;
+        max-width: calc(100% - 20px);
+    }
+    
+    /* Formulários em coluna */
+    .form-row > .col-md-6 {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    
+    /* Botões em coluna */
+    .btn-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn-group .btn {
+        width: 100%;
+        margin-bottom: 5px;
+        border-radius: 8px !important;
+    }
+}
+
+/* ===== CONFIGURAÇÕES MOBILE ===== */
+@media (max-width: 992px) {
+    /* Menu horizontal rolável */
+    #configMenu {
+        flex-direction: row !important;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+    
+    #configMenu .list-group-item {
+        white-space: nowrap;
+        min-width: 120px;
+        text-align: center;
+        margin-right: 5px;
+    }
+}
+
+/* ===== UTILITÁRIOS ===== */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+/* Melhorar toques em mobile */
+@media (max-width: 768px) {
+    .btn, .menu-item a, .notification-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Feedback tátil */
+    .btn:active, .menu-item a:active {
+        transform: scale(0.98);
+        transition: transform 0.1s;
+    }
+}
+
+/* Ocultar elementos em mobile */
+.mobile-only {
+    display: none !important;
+}
+
+@media (max-width: 768px) {
+    .mobile-only {
+        display: block !important;
+    }
+    
+    .desktop-only {
+        display: none !important;
+    }
+}
+
+/* Feedback tátil para mobile */
+.touch-active {
+    transform: scale(0.98) !important;
+    opacity: 0.9;
+    transition: transform 0.1s ease, opacity 0.1s ease;
+}
+
+/* Indicador de scroll em tabelas */
+.table-responsive.scrolling {
+    position: relative;
+}
+
+.table-responsive.scrolling::after {
+    content: "← Arraste →";
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 0.7rem;
+    color: #6c757d;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 3px 10px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1;
+}

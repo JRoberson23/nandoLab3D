@@ -1,0 +1,369 @@
+/* ============================================
+   PÁGINA SERVIÇOS - ESTILOS ESPECÍFICOS
+   ============================================ */
+
+/* HERO SERVIÇOS */
+.servicos-hero {
+    background: linear-gradient(135deg, var(--dark-color) 0%, #1a252f 100%);
+    color: white;
+    padding: 100px 0;
+    margin-top: -20px;
+}
+
+.servicos-hero .hero-title {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.servicos-hero .hero-subtitle {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+    max-width: 500px;
+}
+
+.hero-illustration {
+    position: relative;
+    height: 300px;
+}
+
+/* CARDS DE SERVIÇOS */
+.service-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+    text-align: center;
+    border: 1px solid transparent;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    border-color: var(--primary-color);
+}
+
+.service-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), #3A7CB8);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 2rem;
+}
+
+.service-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: var(--dark-color);
+}
+
+.service-description {
+    color: var(--gray-medium);
+    margin-bottom: 20px;
+}
+
+.service-price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.service-price-period {
+    font-size: 0.9rem;
+    color: var(--gray-medium);
+    margin-bottom: 20px;
+}
+
+.service-features {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.service-features li {
+    padding: 5px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.service-features li:last-child {
+    border-bottom: none;
+}
+
+.service-features i {
+    color: var(--success-color);
+    margin-right: 10px;
+}
+
+/* PROCESSO DE TRABALHO */
+.process-step {
+    padding: 30px 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+
+.process-step:hover {
+    transform: translateY(-5px);
+}
+
+.step-number {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    line-height: 40px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.step-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(42, 92, 139, 0.1);
+    color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 1.8rem;
+}
+
+.step-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: var(--dark-color);
+}
+
+.step-description {
+    color: var(--gray-medium);
+    font-size: 0.95rem;
+}
+
+/* TABELA DE MATERIAIS */
+.materials-table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.materials-table thead th {
+    background: var(--dark-color);
+    color: white;
+    border: none;
+    padding: 15px;
+    font-weight: 600;
+}
+
+.materials-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.materials-table tbody tr:hover {
+    background-color: rgba(42, 92, 139, 0.05);
+}
+
+.materials-table td {
+    padding: 15px;
+    vertical-align: middle;
+    border-color: #eee;
+}
+
+.material-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 8px;
+}
+
+.material-badge.eco {
+    background: rgba(40, 167, 69, 0.1);
+    color: var(--success-color);
+    border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+.material-badge.resistant {
+    background: rgba(220, 53, 69, 0.1);
+    color: var(--danger-color);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.material-badge.versatile {
+    background: rgba(255, 193, 7, 0.1);
+    color: var(--warning-color);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.material-badge.detail {
+    background: rgba(23, 162, 184, 0.1);
+    color: var(--info-color);
+    border: 1px solid rgba(23, 162, 184, 0.3);
+}
+
+.material-badge.flexible {
+    background: rgba(111, 66, 193, 0.1);
+    color: #6f42c1;
+    border: 1px solid rgba(111, 66, 193, 0.3);
+}
+
+.durability-bar {
+    width: 100%;
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-color), var(--success-color));
+    border-radius: 4px;
+}
+
+.price-cell {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+/* FAQ */
+.accordion-button {
+    font-weight: 600;
+    color: var(--dark-color);
+    background: white;
+    border: 1px solid #dee2e6;
+    margin-bottom: 5px;
+    border-radius: 8px !important;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: rgba(42, 92, 139, 0.1);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem rgba(42, 92, 139, 0.25);
+    border-color: var(--primary-color);
+}
+
+.accordion-body {
+    background: #f8f9fa;
+    border-radius: 0 0 8px 8px;
+    border: 1px solid #dee2e6;
+    border-top: none;
+}
+
+/* CTA (reutilizado da home) */
+.cta-section {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a5a 100%);
+    color: white;
+    border-radius: 20px;
+    padding: 60px 40px;
+    margin: 80px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+}
+
+.cta-section::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -30%;
+    width: 150px;
+    height: 150px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 50%;
+}
+
+.cta-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.cta-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+    .servicos-hero .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .servicos-hero .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .hero-illustration {
+        height: 200px;
+        margin-top: 30px;
+    }
+    
+    .materials-table {
+        font-size: 0.9rem;
+    }
+    
+    .cta-title {
+        font-size: 2rem;
+    }
+    
+    .service-card {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .servicos-hero {
+        padding: 60px 0;
+    }
+    
+    .servicos-hero .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-buttons .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .materials-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .process-step {
+        margin-bottom: 20px;
+    }
+}

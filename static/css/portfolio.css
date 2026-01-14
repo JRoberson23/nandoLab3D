@@ -1,0 +1,333 @@
+/* ============================================
+   PÁGINA PORTFÓLIO - ESTILOS ESPECÍFICOS
+   ============================================ */
+
+/* HERO PORTFÓLIO */
+.portfolio-hero {
+    background: linear-gradient(rgba(42, 92, 139, 0.9), rgba(42, 92, 139, 0.9)),
+                url('/static/imagens/portfolio-bg.jpg') center/cover;
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+    margin-top: -20px;
+}
+
+.portfolio-hero .hero-title {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.portfolio-hero .hero-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* FILTROS */
+.btn-filter {
+    background: white;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-filter:hover,
+.btn-filter.active {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(42, 92, 139, 0.2);
+}
+
+/* CARDS DE PROJETO */
+.portfolio-card {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.portfolio-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+.portfolio-img-container {
+    position: relative;
+    overflow: hidden;
+    height: 250px;
+    width: 100%;
+}
+
+.portfolio-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.5s ease;
+}
+
+.portfolio-card:hover .portfolio-img {
+    transform: scale(1.05);
+}
+
+.portfolio-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+}
+
+.portfolio-card:hover .portfolio-overlay {
+    opacity: 1;
+}
+
+.portfolio-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--secondary-color);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    z-index: 2;
+}
+
+.portfolio-card-body {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.portfolio-card-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    color: var(--dark-color);
+}
+
+.portfolio-card-text {
+    color: var(--gray-medium);
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.portfolio-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.portfolio-material {
+    font-size: 0.85rem;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.portfolio-date {
+    font-size: 0.8rem;
+    color: var(--gray-medium);
+}
+
+/* MODAL */
+.project-details h4 {
+    color: var(--dark-color);
+    margin-bottom: 15px;
+}
+
+.project-specs ul {
+    margin-top: 10px;
+}
+
+.project-specs li {
+    padding: 5px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.project-specs li:last-child {
+    border-bottom: none;
+}
+
+.project-specs i {
+    color: var(--primary-color);
+    width: 20px;
+    margin-right: 10px;
+}
+
+/* PAGINAÇÃO */
+.pagination .page-link {
+    color: var(--primary-color);
+    border: 1px solid #dee2e6;
+    margin: 0 3px;
+    border-radius: 8px;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.pagination .page-link:hover {
+    background-color: #f8f9fa;
+    color: var(--primary-color);
+}
+
+/* ANIMAÇÕES */
+.fade-in {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+    .portfolio-hero .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .portfolio-hero .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .btn-filter {
+        padding: 6px 15px;
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+    
+    .portfolio-img-container {
+        height: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .portfolio-card-body {
+        padding: 15px;
+    }
+    
+    .portfolio-card-title {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .portfolio-img-container {
+        height: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .portfolio-img-container {
+        height: 180px;
+    }
+}
+
+/* ===== ANIMAÇÕES ===== */
+.fade-in {
+    animation: fadeInUp 0.5s ease forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-card {
+    animation: cardAppear 0.6s ease forwards;
+}
+
+@keyframes cardAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ===== ESTILOS PARA BUSCA ===== */
+#portfolio-search {
+    transition: all 0.3s ease;
+}
+
+#search-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(42, 92, 139, 0.25);
+}
+
+/* ===== AJUSTES PARA OS NOVOS CARDS ===== */
+.project-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-image {
+    height: 200px;
+    overflow: hidden;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.05);
+}
+
+.project-overlay {
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 0.3s ease;
+}
+
+.btn-view-project {
+    color: white;
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.btn-view-project:hover {
+    transform: scale(1.2);
+}
+
+/* ===== ESTADO VAZIO ===== */
+#empty-state {
+    animation: fadeIn 0.5s ease;
+}
