@@ -312,3 +312,109 @@
         max-width: 150px;
     }
 }
+
+/* ============================================
+   LÂMPADA NO "i" DE IDEIAS - SOLUÇÃO PRECISA
+   ============================================ */
+
+/* 1. Primeiro mudar a cor para amarelo */
+.hero-title .text-warning {
+    color: #FFD700 !important;
+    position: relative;
+    display: inline-block;
+    font-weight: 700;
+}
+
+/* 2. Substituir o pingo do "i" por uma lâmpada */
+.hero-title .text-warning {
+    /* Ajuste fino para posicionamento */
+    letter-spacing: -0.02em;
+    padding-right: 0.15em;
+}
+
+/* 3. Criar a lâmpada que substitui o pingo do "i" */
+.hero-title .text-warning::after {
+    content: '💡';
+    position: absolute;
+    left: -10%;
+    top: -50% !important;
+    display: inline-block;
+    
+    /* POSICIONAMENTO PRECISO sobre o "i" */
+    top: -0.18em;      /* Um pouco acima da linha */
+    right: -0.05em;    /* Sobre o ponto do "i" */
+    
+    /* Tamanho correto */
+    font-size: 0.80em; /* Tamanho do ponto do "i" */
+    
+    /* Animações */
+    animation: lampadaBrilho 1.5s infinite ease-in-out;
+    transform-origin: center;
+    
+    /* Estilo da lâmpada */
+    color: #FFD700;
+    text-shadow: 
+        0 0 8px rgba(255, 215, 0, 0.9),
+        0 0 16px rgba(255, 215, 0, 0.6);
+    
+    /* Para garantir que fique sobre tudo */
+    z-index: 10;
+}
+
+/* 4. Animações suaves para a lâmpada */
+@keyframes lampadaBrilho {
+    0%, 100% { 
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        text-shadow: 
+            0 0 8px rgba(255, 215, 0, 0.9),
+            0 0 16px rgba(255, 215, 0, 0.6);
+    }
+    25% { 
+        opacity: 0.9;
+        transform: scale(1.1) rotate(5deg);
+        text-shadow: 
+            0 0 12px rgba(255, 237, 78, 1),
+            0 0 20px rgba(255, 237, 78, 0.8);
+        color: #FFED4E;
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.2) rotate(0deg);
+        text-shadow: 
+            0 0 15px rgba(255, 249, 170, 1),
+            0 0 25px rgba(255, 249, 170, 0.9);
+        color: #FFF9AA;
+    }
+    75% { 
+        opacity: 0.9;
+        transform: scale(1.1) rotate(-5deg);
+        text-shadow: 
+            0 0 12px rgba(255, 237, 78, 1),
+            0 0 20px rgba(255, 237, 78, 0.8);
+        color: #FFED4E;
+    }
+}
+
+/* 5. Garantir que o "i" original fique sem ponto */
+.hero-title .text-warning {
+    /* Isso mantém o "i" sem seu ponto nativo */
+    font-feature-settings: "kern" off;
+}
+
+/* 6. Ajuste para diferentes tamanhos de tela */
+@media (max-width: 768px) {
+    .hero-title .text-warning::after {
+        font-size: 0.5em;
+        top: -0.15em;
+        right: -0.04em;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-title .text-warning::after {
+        font-size: 0.45em;
+        top: -0.12em;
+        right: -0.03em;
+    }
+}
