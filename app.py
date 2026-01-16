@@ -10,7 +10,8 @@ from starlette.responses import Response
 from datetime import datetime
 from dotenv import load_dotenv
 from sqlalchemy import inspect, text
-
+from config.templates import templates
+from fastapi.responses import PlainTextResponse
 
 import os
 
@@ -21,7 +22,7 @@ from models.database import engine, Base, SessionLocal
 from models import models
 
 # Importar routers
-from routers import main, admin, api
+from routers import main, admin, api, sitemap
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -148,6 +149,7 @@ from config.templates import templates
 app.include_router(main.router)
 app.include_router(admin.router)
 app.include_router(api.router, prefix="/api")
+app.include_router(sitemap.router)
 
 @app.get("/health")
 async def health_check():
@@ -158,6 +160,17 @@ async def health_check():
         "environment": os.getenv("ENVIRONMENT", "development"),
         "database": "PostgreSQL" if os.getenv("DATABASE_URL") else "SQLite"
     }
+
+@app.get("/robots.txt", response_class=PlainTextResponse)
+async def get_robots():
+    """Serve o arquivo robots.txt"""
+    robots_content = """User-agent: *
+Allow: /
+Sitemap: https://nandolab3d.onrender.com/sitemap.xml
+Disallow: /admin/
+Disallow: /api/
+Disallow: /static/uploads/"""
+    return robots_content
 
 # Favicon para evitar erro 404
 @app.get("/favicon.ico")

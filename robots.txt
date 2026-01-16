@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Sitemap: https://nandolab3d.onrender.com/sitemap.xml
+Disallow: /admin/
+Disallow: /api/
+Disallow: /static/uploads/
