@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}{{ projeto.titulo }} - NandoLab 3D{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Botão voltar -->
+    <div class="mb-4">
+        <a href="/portfolio" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Voltar para Portfólio
+        </a>
+    </div>
+    
+    <!-- Imagem principal -->
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <img src="{{ projeto.url_imagem }}" 
+                 alt="{{ projeto.titulo }}" 
+                 class="img-fluid rounded shadow">
+        </div>
+        
+        <div class="col-md-6">
+            <h1 class="mb-3">{{ projeto.titulo }}</h1>
+            <div class="mb-3">
+                <span class="badge bg-primary">{{ projeto.categoria }}</span>
+                <span class="badge bg-secondary">{{ projeto.material }}</span>
+            </div>
+            <p class="lead">{{ projeto.descricao }}</p>
+            
+            {% if projeto.data_conclusao %}
+            <p><strong>Data de conclusão:</strong> {{ projeto.data_conclusao.strftime('%d/%m/%Y') }}</p>
+            {% endif %}
+            
+            <div class="mt-4">
+                <a href="/orcamento" class="btn btn-primary">
+                    Solicitar orçamento similar
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Galeria de imagens extras -->
+    {% if projeto.lista_imagens_extra %}
+    <div class="row mt-5">
+        <h3 class="mb-4">Galeria do Projeto</h3>
+        {% for img in projeto.lista_imagens_extra %}
+        <div class="col-md-3 mb-3">
+            <img src="/static/uploads/projetos/{{ img }}" 
+                 alt="Imagem do projeto" 
+                 class="img-fluid rounded shadow-sm">
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <!-- Projetos relacionados -->
+    {% if projetos_relacionados %}
+    <div class="row mt-5">
+        <h3 class="mb-4">Projetos Relacionados</h3>
+        {% for rel in projetos_relacionados %}
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <img src="{{ rel.url_imagem }}" 
+                     alt="{{ rel.titulo }}" 
+                     class="card-img-top" 
+                     style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ rel.titulo }}</h5>
+                    <a href="/portfolio/{{ rel.id }}" class="btn btn-sm btn-outline-primary">
+                        Ver detalhes
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

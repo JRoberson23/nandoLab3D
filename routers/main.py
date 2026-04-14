@@ -77,6 +77,67 @@ async def home(request: Request, db: Session = Depends(get_db)):
                 "titulo": "NandoLab 3D - Arte em Modelagem Tridimensional"
             }
         )
+    
+@router.get("/portfolio/{projeto_id}", response_class=HTMLResponse)
+async def projeto_detalhe(request: Request, projeto_id: int, db: Session = Depends(get_db)):
+    """Página de detalhe de um projeto específico"""
+    try:
+        # Buscar o projeto pelo ID
+        projeto = db.query(Projeto).filter(
+            Projeto.id == projeto_id,
+            Projeto.publicado == True
+        ).first()
+        
+        if not projeto:
+            # Se não encontrar, volta para o portfólio com erro
+            return RedirectResponse(
+                "/portfolio?error=Projeto não encontrado", 
+                status_code=303
+            )
+        
+        # Buscar outros projetos relacionados (mesma categoria)
+        projetos_relacionados = db.query(Projeto).filter(
+            Projeto.publicado == True,
+            Projeto.categoria == projeto.categoria,
+            Projeto.id != projeto_id
+        ).limit(3).all()
+        
+        return templates.TemplateResponse(
+            "projeto_detalhe.html",  # Você precisa criar este template
+            {
+                "request": request,
+                "projeto": projeto,
+                "projetos_relacionados": projetos_relacionados,
+                "titulo": f"{projeto.titulo} - NandoLab 3D"
+            }
+        )
+        
+    except Exception as e:
+        print(f"Erro ao carregar projeto {projeto_id}: {e}")
+        return RedirectResponse("/portfolio?error=Erro ao carregar projeto", status_code=303)
+
+
+# ========== ROTA EXISTENTE (mantenha como está) ==========
+@router.get("/portfolio", response_class=HTMLResponse)
+async def portfolio(request: Request, db: Session = Depends(get_db)):
+    """Página do portfólio"""
+    projetos = db.query(Projeto).filter(Projeto.publicado == True).all()
+    
+    # Pegar categorias únicas
+    categorias = db.query(Projeto.categoria).filter(
+        Projeto.publicado == True,
+        Projeto.categoria.isnot(None)
+    ).distinct().all()
+    
+    return templates.TemplateResponse(
+        "portfolio.html",
+        {
+            "request": request,
+            "projetos": projetos,
+            "categorias": [cat[0] for cat in categorias if cat[0]],
+            "titulo": "Portfólio - NandoLab 3D"
+        }
+    )
 
 # ... (o resto do seu código permanece igual)
 @router.get("/portfolio", response_class=HTMLResponse)
