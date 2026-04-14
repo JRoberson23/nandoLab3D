@@ -123,41 +123,18 @@
     letter-spacing: 1px;
 }
 
-/* CARDS DE PROJETOS - VERSÃO QUE FUNCIONA */
-.project-card {
-    position: relative;
-    overflow: hidden;
-    border-radius: 15px;
-    transition: all 0.3s ease;
-    height: 100%;
-    background: white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.project-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-}
-
-/* SOLUÇÃO DEFINITIVA - SEM CORTE */
+/* CARDS DE PROJETOS - VERSÃO EXTREMAMENTE SIMPLES */
 .project-img {
     width: 100%;
-    height: auto;  /* Altura automática, não fixa */
-    min-height: 200px;
-    max-height: 280px;
-    object-fit: contain;  /* Mantém a imagem INTEIRA */
-    background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
-    transition: transform 0.5s ease;
-    padding: 8px;
-    display: block;
+    height: auto !important;
+    object-fit: contain !important;
+    background: #f0f0f0;
+    padding: 10px;
 }
 
-.project-card:hover .project-img {
-    transform: scale(1.02);
-}
-
-.project-overlay {
-    display: none;  /* Remove o overlay problemático */
+/* Remove qualquer altura fixa que possa estar vindo de outro lugar */
+.project-card {
+    overflow: visible;
 }
 
 /* DEPOIMENTOS */
