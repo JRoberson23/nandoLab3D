@@ -325,3 +325,45 @@ function animateCards() {
 
 // Inicializar animações
 setTimeout(animateCards, 100);
+
+// ============================================
+// CORREÇÃO DO MODAL - FECHAMENTO
+// ============================================
+
+// Garantir que o modal fecha corretamente
+document.addEventListener('DOMContentLoaded', function() {
+    // Forçar reinicialização do modal
+    const modalElement = document.getElementById('projectModal');
+    if (modalElement) {
+        // Remover qualquer backdrop travado
+        const removeBackdrop = function() {
+            const backdrops = document.querySelectorAll('.modal-backdrop');
+            backdrops.forEach(backdrop => backdrop.remove());
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+        };
+        
+        // Quando o modal for completamente fechado
+        modalElement.addEventListener('hidden.bs.modal', function() {
+            removeBackdrop();
+        });
+        
+        // Se o modal ficar travado, forçar remoção
+        modalElement.addEventListener('shown.bs.modal', function() {
+            removeBackdrop(); // Limpar backdrops duplicados
+        });
+    }
+});
+
+// Sobrescrever a função openProjectModal para garantir limpeza
+const originalOpenProjectModal = openProjectModal;
+window.openProjectModal = function(linkElement) {
+    // Limpar backdrops antes de abrir
+    const backdrops = document.querySelectorAll('.modal-backdrop');
+    backdrops.forEach(backdrop => backdrop.remove());
+    document.body.classList.remove('modal-open');
+    
+    // Chamar função original
+    originalOpenProjectModal(linkElement);
+};

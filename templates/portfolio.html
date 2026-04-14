@@ -80,12 +80,11 @@
                                 data-project-date="{{ projeto.data_conclusao.strftime('%d/%m/%Y') if projeto.data_conclusao else '--/--/----' }}"
                                 data-project-material="{{ projeto.material }}"
                                 {% set todas_imagens = [projeto.url_imagem] %}
-                                    {% for img_extra in projeto.lista_imagens_extra %}
-                                    {% set _ = todas_imagens.append('/static/uploads/projetos/' + img_extra) %}
-                                    {% endfor %}
-                                    data-project-images='{{ todas_imagens|tojson|safe }}'>
-                                    <i class="fas fa-expand-alt"></i>
-                                    <i class="fas fa-eye me-2"></i>Ver Detalhes
+                                {% for img_extra in projeto.lista_imagens_extra %}
+                                {% set _ = todas_imagens.append('/static/uploads/projetos/' + img_extra) %}
+                                {% endfor %}
+                                data-project-images='{{ todas_imagens|tojson|safe }}'>
+                                    <i class="fas fa-eye"></i> Ver Detalhes
                                 </a>
                             </div>
                         </div>
