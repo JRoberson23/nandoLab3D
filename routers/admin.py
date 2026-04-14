@@ -550,10 +550,8 @@ async def criar_projeto(
             data_conclusao=datetime.strptime(data_conclusao, '%Y-%m-%d') if data_conclusao else None,
             publicado=publicado,
             destaque=destaque,
-            status="ativo",
             imagem_principal=filename,  # NOVO CAMPO
             imagens_extra=",".join(imagens_extra_nomes) if imagens_extra_nomes else None,
-            visualizacoes=0
         )
         
         db.add(projeto)
