@@ -50,12 +50,6 @@ class Projeto(Base):
     updated_at = Column(DateTime,default=func.now(),onupdate=func.now())
 
     # ===== PROPRIEDADES ÚTEIS =====
-    @property
-    def url_imagem(self):
-        """Retorna a URL completa da imagem principal"""
-        if self.imagem_principal:
-            return f"/static/uploads/projetos/{self.imagem_principal}"
-        return "/static/imagens/projeto-default.jpg"  # Você pode criar uma imagem padrão
     
     @property
     def url_imagem(self):
@@ -69,6 +63,13 @@ class Projeto(Base):
         
         # Caso contrário, assume que é arquivo local (projetos antigos)
         return f"/static/uploads/projetos/{self.imagem_principal}"
+    
+    @property
+    def lista_imagens_extra(self):
+        """Retorna lista de nomes de imagens extras"""
+        if self.imagens_extra:
+            return self.imagens_extra.split(',')
+        return []
 
 #Pedido/Orçamentos
 class Pedido(Base):
