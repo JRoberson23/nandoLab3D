@@ -455,21 +455,6 @@ async def agendar_backup(
 
 # ========== ROTAS PARA GERENCIAR PROJETOS ==========
 
-@router.get("/projetos/novo", response_class=HTMLResponse)
-async def novo_projeto_form(request: Request, db: Session = Depends(get_db)):
-    """Exibe formulário para criar novo projeto"""
-    # Verificar autenticação
-    if not verificar_autenticacao(request):
-        return RedirectResponse("/admin/login")
-    
-    return templates.TemplateResponse(
-        "admin/novo_projeto.html",
-        {
-            "request": request,
-            "titulo": "Novo Projeto"
-        }
-    )
-
 @router.post("/projetos/novo")
 async def criar_projeto(
     request: Request,
@@ -484,33 +469,24 @@ async def criar_projeto(
     imagens_extra: List[UploadFile] = File([]),
     db: Session = Depends(get_db)
 ):
-    """Cria um novo projeto com upload de imagem"""
-    # Verificar autenticação
+    """Cria um novo projeto com upload de imagem para S3"""
     if not verificar_autenticacao(request):
         return RedirectResponse("/admin/login")
     
     try:
-        # ===== 1. PROCESSAR UPLOAD DA IMAGEM PRINCIPAL =====
+        # ===== 1. VALIDAR IMAGEM =====
         if not imagem.content_type.startswith('image/'):
             return templates.TemplateResponse(
                 "admin/novo_projeto.html",
-                {
-                    "request": request,
-                    "error": "Arquivo não é uma imagem válida",
-                    "titulo": "Novo Projeto"
-                }
+                {"request": request, "error": "Arquivo não é uma imagem válida", "titulo": "Novo Projeto"}
             )
         
         # Verificar tamanho (5MB max)
         contents = await imagem.read()
-        if len(contents) > 5 * 1024 * 1024:  # 5MB
+        if len(contents) > 5 * 1024 * 1024:
             return templates.TemplateResponse(
                 "admin/novo_projeto.html",
-                {
-                    "request": request,
-                    "error": "Imagem muito grande! Tamanho máximo: 5MB",
-                    "titulo": "Novo Projeto"
-                }
+                {"request": request, "error": "Imagem muito grande! Tamanho máximo: 5MB", "titulo": "Novo Projeto"}
             )
         
         # Criar nome único para o arquivo
@@ -518,31 +494,28 @@ async def criar_projeto(
         file_extension = os.path.splitext(imagem.filename)[1]
         filename = f"projeto_{timestamp}{file_extension}"
         
-        # Caminho para salvar
-        upload_dir = "static/uploads/projetos"
-        os.makedirs(upload_dir, exist_ok=True)
-        file_path = os.path.join(upload_dir, filename)
+        # ===== 2. ENVIAR PARA O S3 (NÃO SALVAR LOCALMENTE!) =====
+        await imagem.seek(0)  # Volta o ponteiro para o início
+        url_imagem = upload_para_s3(imagem, filename)
         
-        # Salvar arquivo
-        await imagem.seek(0)
-        with open(file_path, "wb") as f:
-            shutil.copyfileobj(imagem.file, f)
+        if not url_imagem:
+            return templates.TemplateResponse(
+                "admin/novo_projeto.html",
+                {"request": request, "error": "Erro ao enviar imagem para o S3. Tente novamente.", "titulo": "Novo Projeto"}
+            )
         
-        # ===== 2. PROCESSAR IMAGENS ADICIONAIS (se houver) =====
-        imagens_extra_nomes = []
+        # ===== 3. IMAGENS EXTRAS (também para o S3) =====
+        imagens_extra_urls = []
         if imagens_extra:
             for i, img in enumerate(imagens_extra):
                 if img and img.content_type.startswith('image/'):
                     extra_filename = f"galeria_{timestamp}_{i}{os.path.splitext(img.filename)[1]}"
-                    extra_path = os.path.join(upload_dir, extra_filename)
-                    
                     await img.seek(0)
-                    with open(extra_path, "wb") as f:
-                        shutil.copyfileobj(img.file, f)
-                    
-                    imagens_extra_nomes.append(extra_filename)
+                    url_extra = upload_para_s3(img, extra_filename)
+                    if url_extra:
+                        imagens_extra_urls.append(url_extra)
         
-        # ===== 3. CRIAR PROJETO NO BANCO DE DADOS =====
+        # ===== 4. CRIAR PROJETO COM AS URLs DO S3 =====
         projeto = Projeto(
             titulo=titulo,
             descricao=descricao,
@@ -551,15 +524,14 @@ async def criar_projeto(
             data_conclusao=datetime.strptime(data_conclusao, '%Y-%m-%d') if data_conclusao else None,
             publicado=publicado,
             destaque=destaque,
-            imagem_principal=filename,  # NOVO CAMPO
-            imagens_extra=",".join(imagens_extra_nomes) if imagens_extra_nomes else None,
+            imagem_principal=url_imagem,  # ← URL do S3!
+            imagens_extra=",".join(imagens_extra_urls) if imagens_extra_urls else None,
         )
         
         db.add(projeto)
         db.commit()
         db.refresh(projeto)
         
-        # ===== 4. REDIRECIONAR =====
         return RedirectResponse("/admin/projetos", status_code=303)
         
     except Exception as e:
@@ -567,11 +539,7 @@ async def criar_projeto(
         print(f"Erro ao criar projeto: {e}")
         return templates.TemplateResponse(
             "admin/novo_projeto.html",
-            {
-                "request": request,
-                "error": f"Erro ao criar projeto: {str(e)}",
-                "titulo": "Novo Projeto"
-            }
+            {"request": request, "error": f"Erro ao criar projeto: {str(e)}", "titulo": "Novo Projeto"}
         )
     
 
