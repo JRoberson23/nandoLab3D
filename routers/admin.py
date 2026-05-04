@@ -508,10 +508,11 @@ async def criar_projeto(
         file_extension = os.path.splitext(imagem.filename)[1]
         filename = f"projeto_{timestamp}{file_extension}"
         
-        # ===== 2. ENVIAR PARA O S3 (NÃO SALVAR LOCALMENTE!) =====
+        # ===== 2. ENVIAR PARA O S3 =====
         await imagem.seek(0)
-        url_imagem = upload_para_s3(imagem, filename)
-        
+        conteudo_imagem = await imagem.read()
+        url_imagem = upload_para_s3(conteudo_imagem, filename, imagem.content_type)
+
         if not url_imagem:
             return templates.TemplateResponse(
                 "admin/novo_projeto.html",
@@ -525,7 +526,8 @@ async def criar_projeto(
                 if img and img.content_type.startswith('image/'):
                     extra_filename = f"galeria_{timestamp}_{i}{os.path.splitext(img.filename)[1]}"
                     await img.seek(0)
-                    url_extra = upload_para_s3(img, extra_filename)
+                    conteudo_extra = await img.read()
+                    url_extra = upload_para_s3(conteudo_extra, extra_filename, img.content_type)
                     if url_extra:
                         imagens_extra_urls.append(url_extra)
         
