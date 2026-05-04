@@ -1,11 +1,11 @@
 import boto3
 import os
+from io import BytesIO  # ← ADICIONE ESTA IMPORTAÇÃO
 
 S3_BUCKET = "nandolab3d-imagens"
 S3_REGION = "us-east-1"
 
 def get_s3_client():
-    """Cria e retorna um cliente S3 configurado"""
     return boto3.client(
         's3',
         region_name=S3_REGION,
@@ -14,30 +14,22 @@ def get_s3_client():
     )
 
 def upload_para_s3(conteudo_arquivo, nome_arquivo, content_type):
-    """Faz upload para o S3"""
-    
-    # ===== LOG DE DEPURAÇÃO =====
-    print(f"🔍 Tipo de conteudo_arquivo: {type(conteudo_arquivo)}")
-    print(f"🔍 Tamanho: {len(conteudo_arquivo) if hasattr(conteudo_arquivo, '__len__') else 'sem tamanho'}")
-    print(f"🔍 Content-Type: {content_type}")
-    print(f"🔍 Nome do arquivo: {nome_arquivo}")
-    # ============================
-    
+    """
+    Faz upload de uma imagem para o S3
+    conteudo_arquivo: bytes do arquivo
+    """
     client = get_s3_client()
     
     try:
-        # Verifica se é bytes, se não for, tenta converter
-        if isinstance(conteudo_arquivo, bytes):
-            print("✅ É bytes, enviando...")
-            client.upload_fileobj(
-                conteudo_arquivo,
-                S3_BUCKET,
-                f"projetos/{nome_arquivo}",
-                ExtraArgs={'ContentType': content_type}
-            )
-        else:
-            print(f"❌ Não é bytes! Tipo: {type(conteudo_arquivo)}")
-            return None
+        # Converte bytes para um objeto file-like que o boto3 entende
+        arquivo_bytes = BytesIO(conteudo_arquivo)
+        
+        client.upload_fileobj(
+            arquivo_bytes,  # ← agora é um objeto file-like!
+            S3_BUCKET,
+            f"projetos/{nome_arquivo}",
+            ExtraArgs={'ContentType': content_type}
+        )
         
         url = f"https://{S3_BUCKET}.s3.{S3_REGION}.amazonaws.com/projetos/{nome_arquivo}"
         print(f"✅ Upload OK: {url}")
@@ -48,7 +40,7 @@ def upload_para_s3(conteudo_arquivo, nome_arquivo, content_type):
         return None
 
 def deletar_do_s3(nome_arquivo):
-    """Deleta uma imagem do S3 (útil para edição/exclusão)"""
+    """Deleta uma imagem do S3"""
     client = get_s3_client()
     
     try:
