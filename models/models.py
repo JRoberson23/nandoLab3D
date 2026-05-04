@@ -58,11 +58,17 @@ class Projeto(Base):
         return "/static/imagens/projeto-default.jpg"  # Você pode criar uma imagem padrão
     
     @property
-    def lista_imagens_extra(self):
-        """Retorna lista de nomes de imagens extras"""
-        if self.imagens_extra:
-            return self.imagens_extra.split(',')
-        return []
+    def url_imagem(self):
+        """Retorna a URL completa da imagem principal (suporta S3 e local)"""
+        if not self.imagem_principal:
+            return "/static/imagens/projeto-default.jpg"
+        
+        # Se já for uma URL completa (começa com http), retorna diretamente
+        if self.imagem_principal.startswith('http'):
+            return self.imagem_principal
+        
+        # Caso contrário, assume que é arquivo local (projetos antigos)
+        return f"/static/uploads/projetos/{self.imagem_principal}"
 
 #Pedido/Orçamentos
 class Pedido(Base):
