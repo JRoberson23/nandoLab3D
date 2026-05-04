@@ -455,6 +455,20 @@ async def agendar_backup(
 
 # ========== ROTAS PARA GERENCIAR PROJETOS ==========
 
+@router.get("/projetos/novo", response_class=HTMLResponse)
+async def novo_projeto_form(request: Request, db: Session = Depends(get_db)):
+    """Exibe formulário para criar novo projeto"""
+    if not verificar_autenticacao(request):
+        return RedirectResponse("/admin/login")
+    
+    return templates.TemplateResponse(
+        "admin/novo_projeto.html",
+        {
+            "request": request,
+            "titulo": "Novo Projeto"
+        }
+    )
+
 @router.post("/projetos/novo")
 async def criar_projeto(
     request: Request,
@@ -495,7 +509,7 @@ async def criar_projeto(
         filename = f"projeto_{timestamp}{file_extension}"
         
         # ===== 2. ENVIAR PARA O S3 (NÃO SALVAR LOCALMENTE!) =====
-        await imagem.seek(0)  # Volta o ponteiro para o início
+        await imagem.seek(0)
         url_imagem = upload_para_s3(imagem, filename)
         
         if not url_imagem:
@@ -504,7 +518,7 @@ async def criar_projeto(
                 {"request": request, "error": "Erro ao enviar imagem para o S3. Tente novamente.", "titulo": "Novo Projeto"}
             )
         
-        # ===== 3. IMAGENS EXTRAS (também para o S3) =====
+        # ===== 3. IMAGENS EXTRAS =====
         imagens_extra_urls = []
         if imagens_extra:
             for i, img in enumerate(imagens_extra):
@@ -524,7 +538,7 @@ async def criar_projeto(
             data_conclusao=datetime.strptime(data_conclusao, '%Y-%m-%d') if data_conclusao else None,
             publicado=publicado,
             destaque=destaque,
-            imagem_principal=url_imagem,  # ← URL do S3!
+            imagem_principal=url_imagem,
             imagens_extra=",".join(imagens_extra_urls) if imagens_extra_urls else None,
         )
         
