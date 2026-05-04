@@ -14,30 +14,37 @@ def get_s3_client():
     )
 
 def upload_para_s3(conteudo_arquivo, nome_arquivo, content_type):
-    """
-    Faz upload de uma imagem para o S3
-    conteudo_arquivo: bytes do arquivo (já lido com await read())
-    nome_arquivo: nome do arquivo
-    content_type: tipo do arquivo (image/jpeg, image/png, etc)
-    """
+    """Faz upload para o S3"""
+    
+    # ===== LOG DE DEPURAÇÃO =====
+    print(f"🔍 Tipo de conteudo_arquivo: {type(conteudo_arquivo)}")
+    print(f"🔍 Tamanho: {len(conteudo_arquivo) if hasattr(conteudo_arquivo, '__len__') else 'sem tamanho'}")
+    print(f"🔍 Content-Type: {content_type}")
+    print(f"🔍 Nome do arquivo: {nome_arquivo}")
+    # ============================
+    
     client = get_s3_client()
     
     try:
-        # Faz o upload dos bytes para o S3
-        client.upload_fileobj(
-            conteudo_arquivo,  # ← agora é bytes, não UploadFile
-            S3_BUCKET,
-            f"projetos/{nome_arquivo}",
-            ExtraArgs={'ContentType': content_type}
-        )
+        # Verifica se é bytes, se não for, tenta converter
+        if isinstance(conteudo_arquivo, bytes):
+            print("✅ É bytes, enviando...")
+            client.upload_fileobj(
+                conteudo_arquivo,
+                S3_BUCKET,
+                f"projetos/{nome_arquivo}",
+                ExtraArgs={'ContentType': content_type}
+            )
+        else:
+            print(f"❌ Não é bytes! Tipo: {type(conteudo_arquivo)}")
+            return None
         
-        # Monta a URL pública
         url = f"https://{S3_BUCKET}.s3.{S3_REGION}.amazonaws.com/projetos/{nome_arquivo}"
         print(f"✅ Upload OK: {url}")
         return url
         
     except Exception as e:
-        print(f"❌ Erro no upload para S3: {e}")
+        print(f"❌ Erro detalhado no upload: {type(e).__name__}: {e}")
         return None
 
 def deletar_do_s3(nome_arquivo):

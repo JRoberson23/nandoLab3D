@@ -511,6 +511,11 @@ async def criar_projeto(
         # ===== 2. ENVIAR PARA O S3 =====
         await imagem.seek(0)
         conteudo_imagem = await imagem.read()
+        # ===== LOG DE DEPURAÇÃO =====
+        print(f"🔍 Tipo do conteúdo após read: {type(conteudo_imagem)}")
+        print(f"🔍 Tamanho: {len(conteudo_imagem)} bytes")
+        print(f"🔍 Content-Type: {imagem.content_type}")
+        # ============================
         url_imagem = upload_para_s3(conteudo_imagem, filename, imagem.content_type)
 
         if not url_imagem:
