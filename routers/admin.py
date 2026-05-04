@@ -10,6 +10,7 @@ import shutil
 from models.database import get_db
 from models.models import Projeto, Pedido, Produto, Depoimento, Cliente
 from config.auth import verificar_admin
+from s3_storage import upload_para_s3
 
 router = APIRouter(prefix="/admin", tags=["Administração"])
 from config.templates import templates
