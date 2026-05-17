@@ -53,23 +53,30 @@ class Projeto(Base):
     
     @property
     def url_imagem(self):
-        """Retorna a URL completa da imagem principal (suporta S3 e local)"""
+        """Retorna URL pré-assinada válida para a imagem"""
         if not self.imagem_principal:
             return "/static/imagens/projeto-default.jpg"
         
-        # Se já for uma URL completa (começa com http), retorna diretamente
+        # Se já for URL completa (arquivos antigos da AWS), mantém
         if self.imagem_principal.startswith('http'):
             return self.imagem_principal
         
-        # Caso contrário, assume que é arquivo local (projetos antigos)
-        return f"/static/uploads/projetos/{self.imagem_principal}"
-    
-    @property
-    def lista_imagens_extra(self):
-        """Retorna lista de nomes de imagens extras"""
-        if self.imagens_extra:
-            return self.imagens_extra.split(',')
-        return []
+        # Para os novos arquivos do Filebase, gera URL pré-assinada
+        try:
+            from s3_storage import get_s3_client
+            import os
+            client = get_s3_client()
+            url = client.generate_presigned_url(
+                'get_object',
+                Params={'Bucket': os.environ.get("S3_BUCKET_NAME", "nandolab-imagens"), 
+                        'Key': self.imagem_principal},
+                ExpiresIn=3600
+            )
+            return url
+        except Exception as e:
+            print(f"Erro ao gerar URL pré-assinada: {e}")
+            # Fallback: tenta como caminho local
+            return f"/static/uploads/projetos/{self.imagem_principal}"
 
 #Pedido/Orçamentos
 class Pedido(Base):

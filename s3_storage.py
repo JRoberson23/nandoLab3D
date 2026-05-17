@@ -1,48 +1,51 @@
 import boto3
 import os
-from io import BytesIO  # ← ADICIONE ESTA IMPORTAÇÃO
+from io import BytesIO
+from botocore.config import Config
 
-S3_BUCKET = "nandolab3d-imagens"
-S3_REGION = "us-east-1"
+# Configurações do Filebase (pegam das variáveis de ambiente no Render)
+S3_BUCKET = os.environ.get("S3_BUCKET_NAME", "nandolab-imagens")
+S3_ENDPOINT = os.environ.get("S3_ENDPOINT", "https://s3.filebase.com")
+URL_EXPIRATION = 3600  # URL válida por 1 hora
 
 def get_s3_client():
+    """Cria conexão com o Filebase"""
     return boto3.client(
         's3',
-        region_name=S3_REGION,
-        aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
-        aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY")
+        endpoint_url=S3_ENDPOINT,
+        aws_access_key_id=os.environ.get("FILEBASE_ACCESS_KEY"),
+        aws_secret_access_key=os.environ.get("FILEBASE_SECRET_KEY"),
+        config=Config(signature_version='s3v4'),
+        region_name='us-east-1'
     )
 
 def upload_para_s3(conteudo_arquivo, nome_arquivo, content_type):
-    """
-    Faz upload de uma imagem para o S3
-    conteudo_arquivo: bytes do arquivo
-    """
+    """Faz upload e retorna a CHAVE do objeto (não a URL)"""
     client = get_s3_client()
-    
     try:
-        # Converte bytes para um objeto file-like que o boto3 entende
         arquivo_bytes = BytesIO(conteudo_arquivo)
         
+        # Upload do arquivo
         client.upload_fileobj(
-            arquivo_bytes,  # ← agora é um objeto file-like!
+            arquivo_bytes,
             S3_BUCKET,
             f"projetos/{nome_arquivo}",
             ExtraArgs={'ContentType': content_type}
         )
         
-        url = f"https://{S3_BUCKET}.s3.{S3_REGION}.amazonaws.com/projetos/{nome_arquivo}"
-        print(f"✅ Upload OK: {url}")
-        return url
+        # Retorna a CHAVE do objeto (caminho dentro do bucket)
+        # Isso será salvo no banco de dados
+        chave_objeto = f"projetos/{nome_arquivo}"
+        print(f"✅ Upload OK: {chave_objeto}")
+        return chave_objeto
         
     except Exception as e:
-        print(f"❌ Erro detalhado no upload: {type(e).__name__}: {e}")
+        print(f"❌ Erro no upload: {e}")
         return None
 
 def deletar_do_s3(nome_arquivo):
-    """Deleta uma imagem do S3"""
+    """Deleta uma imagem do Filebase"""
     client = get_s3_client()
-    
     try:
         client.delete_object(
             Bucket=S3_BUCKET,
@@ -50,5 +53,5 @@ def deletar_do_s3(nome_arquivo):
         )
         return True
     except Exception as e:
-        print(f"❌ Erro ao deletar do S3: {e}")
+        print(f"❌ Erro ao deletar: {e}")
         return False
