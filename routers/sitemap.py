@@ -1,7 +1,9 @@
 # routers/sitemap.py
-from fastapi import APIRouter, Request
-from fastapi.responses import Response
+from fastapi import APIRouter, Request # type: ignore
+from fastapi.responses import Response # type: ignore
 from datetime import datetime
+from services.ping import router as ping_router 
+app.include_router(ping_router, prefix="/api") # type: ignore
 
 router = APIRouter()
 

@@ -1,17 +1,17 @@
-from fastapi import FastAPI, Request
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
-from fastapi.responses import FileResponse, HTMLResponse
+from fastapi import FastAPI, Request # pyright: ignore[reportMissingImports]
+from fastapi.staticfiles import StaticFiles # pyright: ignore[reportMissingImports]
+from fastapi.templating import Jinja2Templates # type: ignore
+from fastapi.responses import FileResponse, HTMLResponse # type: ignore
 from contextlib import asynccontextmanager
-from fastapi.middleware.cors import CORSMiddleware
-from starlette.middleware.sessions import SessionMiddleware
-from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.responses import Response
+from fastapi.middleware.cors import CORSMiddleware # type: ignore
+from starlette.middleware.sessions import SessionMiddleware # type: ignore
+from starlette.middleware.base import BaseHTTPMiddleware # type: ignore
+from starlette.responses import Response # type: ignore
 from datetime import datetime
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 from sqlalchemy import inspect, text
 from config.templates import templates
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import PlainTextResponse # type: ignore
 from services.scheduler import start_scheduler, stop_scheduler
 
 import os
@@ -195,7 +195,7 @@ async def favicon():
 
 # Para desenvolvimento local
 if __name__ == "__main__":
-    import uvicorn
+    import uvicorn # type: ignore
     uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)
 
 @app.get("/debug/db")

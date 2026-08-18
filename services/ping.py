@@ -1,14 +1,14 @@
 import asyncio
-import httpx
+import httpx # pyright: ignore[reportMissingImports]
 import logging
 from datetime import datetime
-from fastapi import APIRouter
+from fastapi import APIRouter # pyright: ignore[reportMissingImports]
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
 # URL do backend
-BASE_URL = "https://nandolab3d.onrender.com"
+BASE_URL = "https://nandolab3d.onrender.com/helth"
 
 async def ping_backend():
     """Ping automático para manter o servidor ativo"""

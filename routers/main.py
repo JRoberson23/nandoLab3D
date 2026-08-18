@@ -1,9 +1,9 @@
 # routers/main.py - VERSÃO CORRIGIDA
 from datetime import datetime
 import os
-from fastapi import APIRouter, Request, Depends, Form
-from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.templating import Jinja2Templates
+from fastapi import APIRouter, Request, Depends, Form # type: ignore
+from fastapi.responses import HTMLResponse, RedirectResponse # type: ignore
+from fastapi.templating import Jinja2Templates # type: ignore
 from sqlalchemy.orm import Session
 from sqlalchemy import func  
 
