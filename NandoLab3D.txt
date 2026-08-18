@@ -1,0 +1,104 @@
+NandoLab3D
+_pycache_
+      app.cpython-312.pyc
+.vscode
+      setting.json
+app\pycache
+      _init_.cpython-312.pyc
+config
+       _pycache_
+           auth.cpython-312.pyc
+           templates.cpython-312.pyc
+       auth.py
+       templates.py
+instance
+       nandolab.db
+models
+       _pycache_
+            database.cpython-312.pyc
+            models.cpython-312.pyc
+        database.py
+        models.py
+requirements
+routers
+         _pycache_
+              _init_.cpython-312.pyc
+              admin.cpython-312.pyc
+              api.cpython-312.pyc
+              main.cpython-312.pyc
+         _init_.py
+         admin.py
+         api.py
+         main.py
+scripts
+         gerar_hashes.py
+static
+         css
+                       admin
+                                admin.css
+                                 configuracoes.css
+                                 dashboard.css
+                                 depoimentos.css
+                                 pedidos.css
+                                 projetos.css
+                         components
+                                 cards.css
+                                 tables.css
+                 home.css
+                 obrigado.css
+                 portfolio.css
+                 services.css
+                 servicoes.css
+                 sobre.css
+                 style.css
+         imagens
+                 Fav.ico
+                 Logo.png
+          js
+                  admin
+                          commons.js
+                          configuracoes.js
+                          dashboard.js
+                          depoimentos.js
+                          pedidos.js
+                   bse.js
+                   home.js
+                   obrigado.js
+                    orcamento.js
+                    portfolio.js
+                    script.js
+                   servicos.js
+                   sobre.js
+          uploads
+                   orcamentos
+                   projetos
+templates
+          admin
+                   partials
+                          detalhes_pedido.html
+                           sidebar.html
+                            topbar.html
+                    base_admin.html
+                    clientes.html
+                    configuracoes.html
+                    dashboard.html
+                    depoimentos.html
+                    login.html
+                    novo_projeto.html
+                    pedidos.html
+                    projetos.html
+                    teste.html
+       base.html
+       index.html
+       obrigacao.html
+       orcamento.html
+       portfolio.html
+       servicos.html
+       sobre.html
+.env
+.gitignore
+app.py
+requirements.txt
+run.py
+test_routes.py
+test_tudo.py

@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 from sqlalchemy import inspect, text
 from config.templates import templates
 from fastapi.responses import PlainTextResponse
+from services.scheduler import start_scheduler, stop_scheduler
 
 import os
 
@@ -92,7 +93,22 @@ async def lifespan(app: FastAPI):
             print(f"   ✓ {rel_path} (já existe)")
     
     print("🌈 Inicialização completa! Aplicação pronta para receber requisições.")
+
+    # ✅Iniciar scheduler para evitar sleep
+    try:
+        start_scheduler()
+        print("⏰ Scheduler de ping iniciado!")
+    except Exception as e:
+        print(f"⚠️ Erro ao iniciar scheduler: {e}")
+
     yield
+
+    # ✅Parar scheduler
+    try:
+        stop_scheduler()
+        print("⏰ Scheduler de ping parado!")
+    except Exception as e:
+        print(f"⚠️ Erro ao parar scheduler: {e}")
     
     print("🔴 Aplicação encerrada")
 
