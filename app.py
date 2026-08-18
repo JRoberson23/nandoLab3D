@@ -167,6 +167,9 @@ app.include_router(admin.router)
 app.include_router(api.router, prefix="/api")
 app.include_router(sitemap.router)
 
+from services.ping import router as ping_router
+app.include_router(ping_router, prefix="/api")
+
 @app.get("/health")
 async def health_check():
     """Endpoint para verificar saúde da aplicação"""
