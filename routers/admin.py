@@ -1,5 +1,5 @@
-from fastapi import APIRouter, Request, Depends, Form, UploadFile, File, HTTPException
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi import APIRouter, Request, Depends, Form, UploadFile, File, HTTPException # type: ignore
+from fastapi.responses import HTMLResponse, RedirectResponse # type: ignore
 from sqlalchemy.orm import Session
 import os
 from sqlalchemy import func
@@ -350,7 +350,7 @@ async def exportar_backup(
     try:
         from datetime import datetime
         import json
-        from fastapi.responses import FileResponse
+        from fastapi.responses import FileResponse # type: ignore
         import tempfile
         import os
         
@@ -614,7 +614,7 @@ async def rejeitar_pedido(request: Request, pedido_id: int, db: Session = Depend
         return {"success": False, "error": "Não autenticado"}
     
     try:
-        from pydantic import BaseModel
+        from pydantic import BaseModel # type: ignore
         
         class RejeitarData(BaseModel):
             motivo: str
