@@ -13,18 +13,18 @@ async def scheduled_ping():
     await ping_backend()
 
 def start_scheduler():
-    """Inicia o agendador - APENAS seg-sex, 8h-20h"""
+    """Inicia o agendador - APENAS seg-sex, 9h-18h"""
     scheduler.add_job(
         scheduled_ping,
         trigger=CronTrigger(
             day_of_week='mon-fri',  # ✅ Segunda a sexta
-            hour='8-20',            # ✅ Das 8h às 20h
+            hour='9-18',            # ✅ Das 9h às 18h
             minute='0,14,28,42'     # ✅ A cada 14 minutos
         ),
         id="ping_job"
     )
     scheduler.start()
-    logger.info("⏰ Agendador iniciado (seg-sex, 8h-20h)")
+    logger.info("⏰ Agendador iniciado (seg-sex, 9h-18h)")
 
 def stop_scheduler():
     """Para o agendador"""
